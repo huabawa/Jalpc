@@ -1,1 +1,19 @@
+How to parse the AWS detailed billing report located in S3 with Boto3
+
+If you have an AWS linked account and you get errors like Access Denied, as shown below, when you want to get access to cost and usage reports, what should you do?
+
+Luckily, there's a solution.
+
+AWS stores and updates detailed billing reports in your S3 bucket, which you (the user) can access, so you might be wondering, how can I access it using command prompt or terminal?
+
+Accessing S3 bucket with Boto3
+
+Here is a link to the latest boto3 documentation. https://boto3.readthedocs.io/en/latest/.
+I recommend looking at the S3 bucket examples https://boto3.readthedocs.io/en/latest/guide/s3-examples.html
+But before that, let's first understand why we are using boto3.
+
+What is Boto3?
+
+Like the boto3 documentation says, Boto is the Amazon Web Services (AWS) SDK for Python. This means you can write your own python software for EC2 and S3. Isn't that amazing?
+
 
