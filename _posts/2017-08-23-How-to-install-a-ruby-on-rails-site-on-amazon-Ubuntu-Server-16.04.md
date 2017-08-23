@@ -84,5 +84,5 @@ Type Public DNS (IPv4):3000 into your browser. Example: http://ec2-00-00-00-00.c
 
 Voila!! The Catarse website opens up.
 
-
+For a video about how to do this, click on this link. https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s
 
