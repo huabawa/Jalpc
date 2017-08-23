@@ -86,3 +86,16 @@ Voila!! The Catarse website opens up.
 
 For a video about how to do this, click on this link. https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s
 
+Common Issues:
+
+If this shows up in Terminal when you try to run bower install,
+Prefix the choice with ! to persist it to bower.json.
+, you can type !2.
+You can find the solution here as well. https://jaketrent.com/post/bower-resolutions/
+
+If bower init does not work, delete the bower_components folder in catarse and run bower init again.
+
+
+
+
+
