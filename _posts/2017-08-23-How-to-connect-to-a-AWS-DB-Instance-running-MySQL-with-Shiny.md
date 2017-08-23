@@ -1,4 +1,6 @@
-How to connect to a AWS DB instance running MySQL
+How to connect to a AWS DB instance running MySQL with Shiny
+
+Here are the steps:
 
 1. cd /usr/loca/mysql/bin
 2. ./mysql -h <endpoint> -P <port> -u <user> -p
@@ -7,6 +9,8 @@ Example: mysql -h myinstance.123456789012.us-east-1.rds.amazonaws.com -P 3306 -u
 A message starting with, Welcome to the MySQL monitor., will show to tell you that you have successfully connected to the DB instance.
 4. Type SHOW databases; into command prompt.
 5. Type USE database;
+
+For more information on how to do this, go to this link. http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html
 
 GRANT syntax
 Granting all privileges on database to some user in the DB instance MySQL
@@ -25,7 +29,69 @@ I got the idea of displaying mysql tables with Shiny when my colleague, Jin, men
 
 After reading the description on the webpage about how to connect to MySQL with R, my mind was telling me that I need to understand how to use MySQL before I even start using R, and so, I did. However, at the same time, I was wondering if I could find a demo site made already. Luckily, I found live demo of a Shiny app on the persistent data webpage, which was open-sourced on github. This gave me the idea to use the github code for my DB instance mysql data. Meanwhile, I was learning how to use mysql. Although I wanted to go through the mysql reference manual as fast as I could, I realized that I had to go through each step carefully, so that I wasn’t missing out any important steps along the way. As soon as I created a database and a table, I was ready to head over to R. 
 
-The next step was to understand how Shiny and R worked together. To find help with answering this question, I went to google for help again. I typed shiny tutorial into google search and again I found the information that I was looking for, Shiny - Tutorial. Since I knew I was looking for a quick read and a not a video, I scrolled through the page to look for a written tutorial. This lead me to lesson 1, https://shiny.rstudio.com/tutorial/lesson1/, in which I could quickly read about what I needed to know in order to create a shiny webpage. Once I understood the architecture of a shiny app, I went back to the github page of the demo site. 
+The next step was to understand how Shiny and R worked together. To find help with answering this question, I went to google for help again. I typed shiny tutorial into google search and again I found the information that I was looking for, Shiny - Tutorial. Since I knew I was looking for a quick read and a not a video, I scrolled through the page to look for a written tutorial. This lead me to lesson 1, https://shiny.rstudio.com/tutorial/lesson1/, in which I could quickly read about what I needed to know in order to create a shiny webpage. Once I understood the architecture of a shiny app, I went back to the github page of the demo site to implement my own MySQL database.
+
+Here is the demo site's github source code:
+
+https://github.com/daattali/shiny-server/tree/master/persistent-data-storage
+
+In order to use the github source code, you need to enter your own host, port, user, and password in storage.R.
+  
+  "host" = "", # ex. ooo-sth.fdsafdsaa.us-west-2.rds.amazonaws.com
+  "port" = , # 3306
+  "user" = "", # "root"
+  "password" = ""
+  
+Here is full storage.R code:
+
+library(RMySQL)
+
+options(mysql = list(
+  "host" = "",
+  "port" = 3306,
+  "user" = "root",
+  "password" = ""
+))
+
+DB_NAME <- ""
+TABLE_NAME <- ""
+
+save_data_mysql <- function(data) {
+  db <- dbConnect(MySQL(), dbname = DB_NAME,
+                  host = options()$mysql$host,
+                  port = options()$mysql$port,
+                  user = options()$mysql$user,
+                  password = options()$mysql$password)
+  query <-
+    sprintf("INSERT INTO %s (%s) VALUES ('%s')",
+            TABLE_NAME,
+            paste(names(data), collapse = ", "),
+            paste(data, collapse = "', '")
+    )
+  dbGetQuery(db, query)
+  dbDisconnect(db)
+}
+load_data_mysql <- function() {
+  db <- dbConnect(MySQL(), dbname = DB_NAME,
+                  host = options()$mysql$host,
+                  port = options()$mysql$port,
+                  user = options()$mysql$user,
+                  password = options()$mysql$password)
+  query <- sprintf("SELECT * FROM %s", TABLE_NAME)
+  data <- dbGetQuery(db, query)
+  dbDisconnect(db)
+  
+  data
+}
+
+When you're done, you should be able to see the MySQL table that you created.
+
+
+
+
+
+
+
 
 
 
