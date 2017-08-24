@@ -86,6 +86,8 @@ More Suggestions on how to parse detailed billing report: http://blog.backslashe
 
 For detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
 
+
+
 import boto3
 
 # Get the service client
