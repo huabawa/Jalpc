@@ -82,6 +82,8 @@ raw.loc[:,'LinkedAccountId':'SubscriptionId'] # display only columns 'LinkedAcco
 filtered = raw.loc[:,'LinkedAccountId':'SubscriptionId'] # save parsed detailed billing report
 filtered.to_csv('OUT_FILE.csv') # saves in the same directory
 
+More Suggestions on how to parse detailed billing report: http://blog.backslasher.net/aws-billing.html
+
 For detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
 
 import boto3
