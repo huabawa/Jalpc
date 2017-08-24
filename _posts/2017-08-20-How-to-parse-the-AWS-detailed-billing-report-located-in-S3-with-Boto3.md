@@ -83,6 +83,19 @@ filtered = raw.loc[:,'LinkedAccountId':'SubscriptionId'] # save parsed detailed 
 
 For detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
 
+import boto3
+
+# Get the service client
+s3 = boto3.client('s3')
+
+# Copies object located in mybucket at mykey
+# to the location otherbucket at otherkey
+copy_source = {
+    'Bucket': 'mybucket',
+    'Key': 'mykey'
+}
+s3.copy(copy_source, 'otherbucket', 'otherkey')
+
 
 
 
