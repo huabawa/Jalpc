@@ -80,6 +80,7 @@ import pandas
 raw = pandas.read_csv('Directory of saved csv')
 raw.loc[:,'LinkedAccountId':'SubscriptionId'] # display only columns 'LinkedAccountId' to 'SubscriptionId'
 filtered = raw.loc[:,'LinkedAccountId':'SubscriptionId'] # save parsed detailed billing report
+filtered.to_csv('OUT_FILE.csv') # saves in the same directory
 
 For detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
 
