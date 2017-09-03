@@ -6,7 +6,7 @@ So, what strategy could you use to solve a problem of this kind?
 
 Before we delve into this problem, let's understand why tagging is so important.
 
-Here is a list of reasons. Please don't skip this part.
+Here is a list of reasons. Please don't skip this part. 
 
 1. Tags can help you track cost
 2. Tags can help you track AWS resource usage
@@ -15,7 +15,7 @@ Here is a list of reasons. Please don't skip this part.
 
 How to track cost by using tags.
 
-There are two ways to track cost using
+There are two ways to track cost.
 
 Cost Explorer
 
@@ -30,11 +30,16 @@ End_date
 
 **The End_date is the end date of the project.
 
-Another way to track cost by using tags is to go read the csv file that is saved everyday to the S3 bucket named AccountNumber-nameofpayer-utilization. 
+Another way to track cost by using tags is to read the csv file that is saved twice a day to the S3 bucket named AccountNumber-dlt-utilization. 
 These files are zip files, so you will need to unzip them first. If you want to receive daily or weekly summaries of the costs, you can write some lambda code to parse the csv, add up the costs, and create an SNS mailing list to email all of the account users what the weekly spendings are. 
-Here is a link to an article about this. 
+Before we get into some lambda code let's first understand something even more important.
 
 After reading about cost tracking, you might ask what if the users forget to tag their resources?
 
-A way to solve this problem is
+A way to solve this problem is Autotagging.
 
+Here is an article about autotagging writtenn by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
+
+Lambda permissions to describe and tag EC2 resources are obtained from an IAM role the template creates along with the function. The template also creates an IAM group into which you can place your user to enforce the behavior described in this blog post.
+Owner, with the current userName.
+PrincipalId, with the current user’s aws:userid value.
