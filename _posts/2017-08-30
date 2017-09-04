@@ -36,7 +36,21 @@ Before we get into some lambda code let's first understand something even more i
 
 After reading about cost tracking, you might ask what if the users forget to tag their resources?
 
+Autagging 
+
 A way to solve this problem is Autotagging.
+
+The autotagging solution we'll be using today is summarized below.
+
+When a resource is created, an API call is called and recorded by CloudWatch. Then, a cloudwatch event rule triggers a lambda function providing it with event details.
+The lambda function extracts every resource ID and the user's identity and applies two tags, Owner and PrincipalId (current user’s aws:userid value), to the created resource.
+
+A simpler one sentence summary:
+
+When an EC2 Instance, Amazon Elastic Block Store (EBS) volumes, EBS snapshots or Amazon Machine Images (AMIs) is created, it invokes the autotag lambda function.
+
+
+
 
 Here is an article about autotagging writtenn by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
 
