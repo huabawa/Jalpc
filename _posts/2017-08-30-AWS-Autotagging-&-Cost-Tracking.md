@@ -61,7 +61,9 @@ https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.t
 2. When the autotag stack is created, you will see CREATE_COMPLETE in the status.
 Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under Resources as shown in the screenshot.
 
-![alt text](https://github.com/huabawa/Jalpc/tree/master/_posts/AM9.png)
+![alt text][logo]
+
+[logo]: https://github.com/huabawa/Jalpc/tree/master/_posts/AM9.png
 
     *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone      else created, he or she will get an error message.*
 
