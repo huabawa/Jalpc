@@ -219,17 +219,19 @@ Note: AWS config must be turned on before you launch required tags.
 
 #### Glossary
 
-###### CloudWatch: An AWS service that deploys templates (like packages) that configure resources for you. 
+##### CloudWatch: 
+An AWS service that deploys templates (like packages) that configure resources for you. 
 Definition from AWS below.
 http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
 AWS CloudFormation is a service that helps you model and set up your Amazon Web Services resources so that you can spend less time managing those resources and more time focusing on your applications that run in AWS. You create a template that describes all the AWS resources that you want (like Amazon EC2 instances or Amazon RDS DB instances), and AWS CloudFormation takes care of provisioning and configuring those resources for you. You don't need to individually create and configure AWS resources and figure out what's dependent on what; AWS CloudFormation handles all of that. The following scenarios demonstrate how AWS CloudFormation can help.
 
-###### CloudTrail: An AWS service that records every action performed by the user, role, or AWS service as events.
+##### CloudTrail: 
+An AWS service that records every action performed by the user, role, or AWS service as events.
 Definition from AWS below.
 http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
 AWS CloudTrail is an AWS service that helps you enable governance, compliance, and operational and risk auditing of your AWS account. Actions taken by a user, role, or an AWS service are recorded as events in CloudTrail. Events include actions taken in the AWS Management Console, AWS Command Line Interface, and AWS SDKs and APIs.
 
-###### AWS Config (AWS definition): 
+##### AWS Config (AWS definition): 
 http://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html
 An AWS services that provides you with a detailed view of the configuration of AWS resources in your AWS account. This includes how the resources are related to one another and how they were configured in the past so that you can see how the configurations and relationships change over time.
 
