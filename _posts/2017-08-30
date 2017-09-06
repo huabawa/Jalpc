@@ -84,6 +84,53 @@ Here are the steps:
 Now that we have created the CloudWatch Events Rule, what do we do next?
 
 1. Edit the Lambda code
+2. Create a new IAM Role
+
+Let's start with the IAM role. Here's what you have to do.
+
+Create the IAM Role by adding "rds:AddTagsToResource", "rds:Describe*" to Action, as shown below.
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "cloudtrail:LookupEvents"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "Stmt1458923097000"
+        },
+        {
+            "Action": [
+                "ec2:CreateTags",
+                "ec2:Describe*",
+                "rds:AddTagsToResource",
+                "rds:Describe*",
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "Stmt1458923121000"
+        }
+    ]
+}
+
+Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
+
+1. idc = '' # below ids = []
+2. accountID = 'XXXXXyouraccountID' # below userType = detail['userIdentity']['type']
+3. rds = boto3.client('rds') # below ec2 = boto3.resource('ec2')
+4. elif eventname == 'CreateDBInstance': # add these lines below the 'event == eventname == 'CreateSnapshot':' block
+            idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() # example arn:aws:rds:us-east-1:500048750000:db:affafafafaa
+            logger.info(idc) 
+    
 
 
 
