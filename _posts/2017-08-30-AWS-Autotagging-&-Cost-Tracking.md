@@ -56,12 +56,12 @@ Follow the steps below to autotag your EC2 Instance, Amazon Elastic Block Store 
 1. Deploy the cloudformation template in the region of your choosing to create an Autotag stack. Copy and paste the following Amazon S3 template URL.
 https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template
 
-Note: Make sure CloudTrail is enabled in this region because cloudwatch events will not work if it is not turned on.
+    *Note: Make sure CloudTrail is enabled in this region because cloudwatch events will not work if it is not turned on.*
 
 2. When the autotag stack is created, you will see CREATE_COMPLETE in the status.
 Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under Resources as shown in the screenshot.
 
-Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.
+    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone      else created, he or she will get an error message.*
 
 Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
 
