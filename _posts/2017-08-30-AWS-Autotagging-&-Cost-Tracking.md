@@ -92,7 +92,7 @@ Now that we have created the CloudWatch Events Rule, what do we do next?
 Let's start with the IAM role. Here's what you have to do.
 
 Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, as shown below.
-
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -124,6 +124,7 @@ Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, a
         }
     ]
 }
+```
 
 Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
 
