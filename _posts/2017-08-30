@@ -1,4 +1,4 @@
-All About AWS Tags
+# All About AWS Tags
 
 Sometimes it can be really hard to track down who is using the correct tags on AWS, especially when you have many people launching instances in different regions across the United States.
 
@@ -13,11 +13,11 @@ Here is a list of reasons. Please don't skip this part.
 3. Tags can help you find your own AWS resource easily
 4. Tags can help you find whoever isn't tagging their resources
 
-How to track cost by using tags.
+## How to track cost by tags.
 
 There are two ways to track cost.
 
-Cost Explorer
+#### Cost Explorer
 
 In AWS Services Billing, you can find Cost Explorer, which shows you month-date spendings and daily spendings. On the left side of Cost Explorer, you have the option of selecting which tags to filter, for example, Name: Sally. On top of the graph, you can even group the costs and usage by tag key.
 This is very convenient because you can see how much is spent by each user.
@@ -30,7 +30,7 @@ End_date
 
 **The End_date is the end date of the project.
 
-Another way to track cost by using tags is to read the csv file that is saved twice a day to the S3 bucket, named AccountNumber-dlt-utilization. 
+Another way to track cost by tags is to read the csv file that is saved twice a day to the S3 bucket, named AccountNumber-dlt-utilization. 
 These files are zip files, so you will need to unzip them first. If you want to receive daily or weekly summaries of the costs, you can write some lambda code to parse the csv, add up the costs, and create an SNS mailing list to email all of the account users what the weekly spendings are. 
 To do this, follow this link here. 
 
@@ -38,7 +38,7 @@ Before we get into some lambda code, let's first understand something even more 
 
 After reading about cost tracking, you might ask what if the users forget to tag their resources?
 
-Autagging 
+## Autagging 
 
 A way to solve this problem is Autotagging.
 
@@ -63,7 +63,9 @@ Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup un
 
 Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.
 
-Next step: Auototag RDS instances and Get automatic SNS email alerts whenever an improperly tagged resource is detected
+Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
+
+#### Next step: Auototag RDS instances and Get automatic SNS email alerts whenever an improperly tagged resource is detected
 
 When the autotagging template is deployed in cloudformation, a cloudwatch events rule is created. If you now go to cloudwatch and click
 on rules under events, you will see New-EC2Resource-Event. Open it and you will see the event pattern, which has four event names:
@@ -178,7 +180,7 @@ automatically sends you an email when it detects improperly tagged resources. Is
 How do we ensure that people are tagging all the time? The SNS code that we wrote solves this problem. Another way 
 to keep track of users that aren't following the tagging rules is this solution, Required tags, that we'll introduce in the following section.
 
-Required Tags
+## Required Tags
 
 You can use AWS config to quickly find all the users who are not tagging their resources with the required tags. In the steps below, I will show you how that's done.
 
@@ -192,7 +194,7 @@ You can use AWS config to quickly find all the users who are not tagging their r
 Note: AWS config must be turned on before you launch required tags.
 
 7. When the stack, required-tags-stack, has been created, go to the AWS config dashboard.
-8. On the left side you will Rules. Click on it.
+8. On the left side, you will see Rules. Click on it.
 9. Click on rule name, required-tags. Here, you will see all the noncompliant EC2, RDS, and S3 buckets.
 
 Glossary
@@ -204,4 +206,4 @@ IAM Role:
 
 
 
-Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
+
