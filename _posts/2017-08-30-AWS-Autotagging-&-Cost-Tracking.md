@@ -130,11 +130,12 @@ Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following
 1. ```idc = '' # below ids = []```
 2. ```accountID = 'XXXXXyouraccountID' # below userType = detail['userIdentity']['type']```
 3. ```rds = boto3.client('rds') # below ec2 = boto3.resource('ec2')```
-4. ```elif eventname == 'CreateDBInstance':
+4. 
+```elif eventname == 'CreateDBInstance':
 idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() #arn:aws:rds:us-east-1:509248752274:db:affafafafaa
 logger.info(idc)```
 5.  ```instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'```
-```           for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
+```for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
                 instances.append(status['InstanceId'])
 
             def filterInstances(instances):
