@@ -149,7 +149,8 @@ print(ids) # print the resource IDs so you can see them in CloudWatch logs
 for tag in tags['Tags']:
     if tag['Key'] != 'Project' or tag['Key'] != 'End_date':
     print ('SNS ready')
-    sns = boto3.client('sns', aws_access_key_id='AAAAAAXXXXXXXtypeyourown',             aws_secret_access_key='ifodsafdiosio8987329OIEJSiitypeyourown')
+    sns = boto3.client('sns', aws_access_key_id='AAAAAAXXXXXXXtypeyourown',        
+    aws_secret_access_key='ifodsafdiosio8987329OIEJSiitypeyourown')
     response = sns.publish(
         TopicArn='arn:aws:sns:us-east-1:59090909090:Autotag',
         Message= user + '(' + principal + ') did not include Project and End_date tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
