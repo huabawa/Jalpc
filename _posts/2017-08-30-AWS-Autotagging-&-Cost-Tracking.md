@@ -24,9 +24,9 @@ This is very convenient because you can see how much is spent by each user.
 
 Since each user could be running more than one instance at a time, we want the users to tag their resources with these tag keys.
 
-Name
-Project
-End_date
+* Name
+* Project
+* End_date
 
 **The End_date is the end date of the project.
 
