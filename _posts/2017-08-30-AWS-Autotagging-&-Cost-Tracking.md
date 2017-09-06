@@ -63,6 +63,10 @@ Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup un
 
    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.*
 
+![alt text][logo]
+
+[logo]: https://github.com/huabawa/Jalpc/tree/master/_posts/AM9.png
+
 Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
 
 #### Next step: Auototag RDS instances and Get automatic SNS email alerts whenever an improperly tagged resource is detected
