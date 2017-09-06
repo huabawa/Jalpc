@@ -210,9 +210,7 @@ You can use AWS config to quickly find all the users who are not tagging their r
 4. Cick next.
 5. Type the tag key and values that you'd like AWS config to check.
 6. Click next until you reach create. When you do, click create.
-
-Note: AWS config must be turned on before you launch required tags.
-
+   *Note: AWS config must be turned on before you launch required tags.*
 7. When the stack, required-tags-stack, has been created, go to the AWS config dashboard.
 8. On the left side, you will see Rules. Click on it.
 9. Click on rule name, required-tags. Here, you will see all the noncompliant EC2, RDS, and S3 buckets.
