@@ -1,4 +1,4 @@
-# All About AWS Tags
+# All About AWS Autotagging & Cost Tracking
 
 Sometimes it can be really hard to track down who is using the correct tags on AWS, especially when you have many people launching instances in different regions across the United States.
 
