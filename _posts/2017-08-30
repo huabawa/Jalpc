@@ -30,9 +30,10 @@ End_date
 
 **The End_date is the end date of the project.
 
-Another way to track cost by using tags is to read the csv file that is saved twice a day to the S3 bucket named AccountNumber-dlt-utilization. 
+Another way to track cost by using tags is to read the csv file that is saved twice a day to the S3 bucket, named AccountNumber-dlt-utilization. 
 These files are zip files, so you will need to unzip them first. If you want to receive daily or weekly summaries of the costs, you can write some lambda code to parse the csv, add up the costs, and create an SNS mailing list to email all of the account users what the weekly spendings are. 
-To do this, follow this link here.
+To do this, follow this link here. 
+
 Before we get into some lambda code, let's first understand something even more important.
 
 After reading about cost tracking, you might ask what if the users forget to tag their resources?
@@ -41,7 +42,7 @@ Autagging
 
 A way to solve this problem is Autotagging.
 
-The autotagging solution we'll be using today is summarized below.
+The autotagging solution we'll be using is summarized below.
 
 When a resource is created, an API call is made and recorded by CloudWatch. Then, a CloudWatch event rule triggers a lambda function providing it with event details.
 The lambda function extracts every resource ID and the user's identity and applies two tags, Owner and PrincipalId (current user’s aws:userid value), to the created resource.
@@ -68,7 +69,7 @@ When the autotagging template is deployed in cloudformation, a cloudwatch events
 on rules under events, you will see New-EC2Resource-Event. Open it and you will see the event pattern, which has four event names:
 "CreateVolume", "RunInstances", "CreateImage", and "CreateSnapshot".
 
-If we want to autotag rds instances and clusters, we would need to... Yes, you guessed it. We would need to create an event rule for rds.
+If we want to autotag rds instances, we would need to... Yes, you guessed it. We would need to create an event rule for rds.
 
 Here are the steps:
 
@@ -88,7 +89,7 @@ Now that we have created the CloudWatch Events Rule, what do we do next?
 
 Let's start with the IAM role. Here's what you have to do.
 
-Create the IAM Role by adding "rds:AddTagsToResource", "rds:Describe*" to Action, as shown below.
+Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, as shown below.
 
 {
     "Version": "2012-10-17",
@@ -154,6 +155,51 @@ Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following
                     )
 6. elif idc: # Add these lines after the if 'ids:' block
     rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}])    
+    
+Wait! You're not done yet. Before you leave this page, go to SNS to create a topic and subscribe to it. Here are the steps.
+
+1. Go to SNS.
+2. Click on Create Topic in the SNS Dashboard.
+3. Type a Topic Name and Display Name.
+4. Click Create Topic.
+5. Click Topics on the left.
+6. Select the topic that you just created.
+7. Click on Actions and select Subscribe to topic.
+8. Select Email for Protocol. Type in your email and click Create subscription.
+9. You will receive a subscription confirmation in a few minutes. Confirm it and then paste the topic arn into your lambda function.
+
+Congrats! You have now completed the Autotagging section. 
+
+Summary of what we have just done:
+
+We created an autotagging service that automatically tags EC2 instances, volumes, snapshots, AMIs, and RDS instances with the owner and principal ID, and 
+automatically sends you an email when it detects improperly tagged resources. Isn't that great?
+
+How do we ensure that people are tagging all the time? The SNS code that we wrote solves this problem. Another way 
+to keep track of users that aren't following the tagging rules is this solution, Required tags, that we'll introduce in the following section.
+
+Required Tags
+
+You can use AWS config to quickly find all the users who are not tagging their resources with the required tags. In the steps below, I will show you how that's done.
+
+1. Go to this website http://docs.aws.amazon.com/config/latest/developerguide/required-tags.html
+2. Scroll to the bottom of the webpage.
+3. Click launch stack.
+4. Cick next.
+5. Type the tag key and values that you'd like AWS config to check.
+6. Click next until you reach create. When you do, click create.
+
+Note: AWS config must be turned on before you launch required tags.
+
+7. When the stack, required-tags-stack, has been created, go to the AWS config dashboard.
+8. On the left side you will Rules. Click on it.
+9. Click on rule name, required-tags. Here, you will see all the noncompliant EC2, RDS, and S3 buckets.
+
+Glossary
+
+CloudWatch: 
+AWS Config:
+IAM Role:
 
 
 
