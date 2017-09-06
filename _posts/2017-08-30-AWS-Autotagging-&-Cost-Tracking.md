@@ -127,8 +127,14 @@ Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, a
 
 Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
 
-1. ```idc = '' # below ids = []```
-2. ```accountID = 'XXXXXyouraccountID' # below userType = detail['userIdentity']['type']```
+1. 
+```python
+idc = '' # below ids = []
+```
+2. 
+```python
+accountID = 'XXXXXyouraccountID' # below userType = detail['userIdentity']['type']
+```
 3. 
 ```python
 rds = boto3.client('rds') # below ec2 = boto3.resource('ec2')
