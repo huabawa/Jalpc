@@ -134,29 +134,28 @@ Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following
 ```elif eventname == 'CreateDBInstance':
 idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() #arn:aws:rds:us-east-1:509248752274:db:affafafafaa
 logger.info(idc)```
-5.  ```instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'```
-```for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
-                instances.append(status['InstanceId'])
-
-            def filterInstances(instances):
-                filtertemplate = [{'Name': 'resource-id','Values': instances}]
-                return filtertemplate
-
-            for instance in instances:
-                tags = ec2.meta.client.describe_tags(Filters=filterInstances(instances))
-            
-            print(tags) # print the tags so you can see them in CloudWatch logs
-            print(ids) # print the resource IDs so you can see them in CloudWatch logs
-            for tag in tags['Tags']:
-                if tag['Key'] != 'Project' or tag['Key'] != 'End_date':
-                    print ('SNS ready')
-                    sns = boto3.client('sns', aws_access_key_id='AAAAAAXXXXXXXtypeyourown', aws_secret_access_key='ifodsafdiosio8987329OIEJSiitypeyourown')
-                    response = sns.publish(
-                        TopicArn='arn:aws:sns:us-east-1:59090909090:Autotag',
-                        Message= user + '(' + principal + ') did not include Project and End_date tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
-                        Subject='AutoTag Alert'
-                    )
+5.  
 ```
+instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'
+for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
+    instances.append(status['InstanceId'])
+def filterInstances(instances):
+    filtertemplate = [{'Name': 'resource-id','Values': instances}]
+    return filtertemplate
+for instance in instances:
+    tags = ec2.meta.client.describe_tags(Filters=filterInstances(instances))
+print(tags) # print the tags so you can see them in CloudWatch logs
+print(ids) # print the resource IDs so you can see them in CloudWatch logs
+for tag in tags['Tags']:
+    if tag['Key'] != 'Project' or tag['Key'] != 'End_date':
+    print ('SNS ready')
+    sns = boto3.client('sns', aws_access_key_id='AAAAAAXXXXXXXtypeyourown',             aws_secret_access_key='ifodsafdiosio8987329OIEJSiitypeyourown')
+    response = sns.publish(
+        TopicArn='arn:aws:sns:us-east-1:59090909090:Autotag',
+        Message= user + '(' + principal + ') did not include Project and End_date tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
+        Subject='AutoTag Alert'
+        )```
+
 6. ```elif idc: # Add these lines after the if 'ids:' block
     rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}]) ```
     
