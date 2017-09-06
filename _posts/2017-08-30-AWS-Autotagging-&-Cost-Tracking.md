@@ -131,9 +131,9 @@ Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following
 2. ```accountID = 'XXXXXyouraccountID' # below userType = detail['userIdentity']['type']```
 3. ```rds = boto3.client('rds') # below ec2 = boto3.resource('ec2')```
 4. 
-```elif eventname == 'CreateDBInstance':
+elif eventname == 'CreateDBInstance':
 idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() #arn:aws:rds:us-east-1:509248752274:db:affafafafaa
-logger.info(idc)```
+logger.info(idc)
 5.  
 
 instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'
@@ -156,8 +156,8 @@ for tag in tags['Tags']:
         Subject='AutoTag Alert'
         )
 
-6. ```elif idc: # Add these lines after the if 'ids:' block
-    rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}]) ```
+6. elif idc: # Add these lines after the if 'ids:' block
+    rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}])
     
 Wait! You're not done yet. Before you leave this page, go to SNS to create a topic and subscribe to it. Here are the steps.
 
