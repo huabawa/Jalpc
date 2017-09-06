@@ -135,7 +135,7 @@ Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following
 idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() #arn:aws:rds:us-east-1:509248752274:db:affafafafaa
 logger.info(idc)```
 5.  
-```
+
 instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'
 for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
     instances.append(status['InstanceId'])
@@ -154,7 +154,7 @@ for tag in tags['Tags']:
         TopicArn='arn:aws:sns:us-east-1:59090909090:Autotag',
         Message= user + '(' + principal + ') did not include Project and End_date tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
         Subject='AutoTag Alert'
-        )```
+        )
 
 6. ```elif idc: # Add these lines after the if 'ids:' block
     rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}]) ```
