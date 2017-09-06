@@ -133,9 +133,8 @@ Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following
 4. ```elif eventname == 'CreateDBInstance':
 idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() #arn:aws:rds:us-east-1:509248752274:db:affafafafaa
 logger.info(idc)```
-5.  
-```instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'
-            for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
+5.  ```instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'```
+```           for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
                 instances.append(status['InstanceId'])
 
             def filterInstances(instances):
