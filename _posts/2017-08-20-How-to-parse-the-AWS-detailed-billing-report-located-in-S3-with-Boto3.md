@@ -12,11 +12,11 @@ Here is a link to the latest boto3 documentation. https://boto3.readthedocs.io/e
 I recommend looking at the S3 bucket examples. https://boto3.readthedocs.io/en/latest/guide/s3-examples.html
 But before that, let's first understand why we are using boto3.
 
-## What is Boto3?
+### What is Boto3?
 
 Like the boto3 documentation says, Boto is the Amazon Web Services (AWS) SDK for Python. This means you can write your own python software for EC2 and S3. Isn't that amazing? The user doesn't have to open the AWS console at all to open the s3 bucket!
 
-## How to Install Boto3.
+### How to Install Boto3.
 
 Trust me it's simple. Just follow the steps below to set up Boto3 on your computer. When you get stuck, don't panic!
 
@@ -27,7 +27,7 @@ Link to pip installation documentation: https://pip.pypa.io/en/stable/installing
 
 Congrats! You have successfully installed boto3. The next step will be to write some python code to print out the S3 bucket list, list the contents of an S3 bucket, and more.
 
-## Setting up AWS CLI
+### Setting up AWS CLI
 
 When you have installed AWS CLI, check that you have successfully installed it by typing, aws --version, in your terminal.
 Something like this, aws-cli/1.11.136 Python/2.7.13 Darwin/15.6.0 botocore/1.6.3, should appear.
