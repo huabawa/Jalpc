@@ -1,3 +1,4 @@
+## How to install a ruby on rails site on amazon Ubuntu Server 16.04
 
 Before following the steps below, please go to EC2 by typing in EC2 in the AWS services search bar in your AWS console.
 
@@ -15,8 +16,7 @@ Before following the steps below, please go to EC2 by typing in EC2 in the AWS s
 12. When have successfully connected to the ubuntu instance, you will get something like this, ubuntu@ec2-00-000-00-000:
 
 Type the following into Terminal, one line at a time.
-
-
+```unix
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
 sudo apt-get update
@@ -32,7 +32,6 @@ git clone https://github.com/catarse/catarse.git
 
 docker-compose -v
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)"
-
 
 docker-compose run --rm web bash
 
@@ -62,9 +61,10 @@ docker-compose up -d
 docker-compose logs
 
 docker-compose ps
+```
 
 You should get the following if everything is running properly.
-
+```
 catarse_db_1       /docker-           Up                 0.0.0.0:5432->54 
                    entrypoint.sh                         32/tcp           
                    postgres                                               
@@ -79,8 +79,8 @@ catarse_test_1     bundle exec        Up
                    ...                                                    
 catarse_web_1      rails server -b    Up                 0.0.0.0:3000->30 
                    0.0.0.0 -p ...                        00/tcp   
-
-Type Public DNS (IPv4):3000 into your browser. Example: http://ec2-00-00-00-00.compute-1.amazonaws.com:3000/
+```
+Type ```Public DNS (IPv4):3000``` into your browser. Example: http://ec2-00-00-00-00.compute-1.amazonaws.com:3000/
 
 Voila!! The Catarse website opens up.
 
@@ -89,11 +89,11 @@ For a video about how to do this, click on this link. https://www.youtube.com/wa
 Common Issues:
 
 If this shows up in Terminal when you try to run bower install,
-Prefix the choice with ! to persist it to bower.json.
-, you can type !2.
+```Prefix the choice with ! to persist it to bower.json.```
+, you can type ```!2```.
 You can find the solution here as well. https://jaketrent.com/post/bower-resolutions/
 
-If bower init does not work, delete the bower_components folder in catarse and run bower init again.
+If ```bower init``` does not work, delete the ```bower_components``` folder in catarse and run bower init again.
 
 
 
