@@ -13,6 +13,6 @@ You will a receive an email asking you to confirm the subscription.
 9. Under Event Type, choose EC2 Instance State-change Notification
 10. Choose any state or specific states depending on what you want.
 11. Click Add Target. Scroll down and select SNS topic.
-12. Selec the topic that you had just created.
+12. Select the topic that you had just created.
 13. Click Configure Details. Write a name and description. Then, click Create rule.
 
