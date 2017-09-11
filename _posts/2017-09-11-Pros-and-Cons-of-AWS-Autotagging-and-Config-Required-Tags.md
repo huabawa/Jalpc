@@ -14,11 +14,13 @@ NOTE: If you go with Autotagging, the autotagged resources are EC2 Instances, vo
 |--:                                                             |--:                                  |
 |You can see a list of untagged resourcesin the Config dashboard.|You cannot autotag resources.        |
 |Setting up the required tags config rule is very easy.          |                                     |
-|You can send SNS email alerts as well.                          |                                     |
+|You can send SNS email alerts.                                  |                                     |
 
+The biggest difference between AWS Config rule Required Tags and Autotagging that we most care about is the fact that you cannot autotag with Required Tags. Autotagging is only possible when you write lambda code.
 
+Although functionality is an important factor of consideration, we must not forget another important factor, cost.
 
-
+Let's compare the cost of using Required Tags and the Autotagging Lambda function.
 
 
 Example:
