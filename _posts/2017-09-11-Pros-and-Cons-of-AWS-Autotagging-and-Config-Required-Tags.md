@@ -64,45 +64,51 @@ You are charged for the total number of requests across all your functions. Lamb
 
 First 1 million requests per month are free
 $0.20 per 1 million requests thereafter ($0.0000002 per request)
+Duration
+Duration is calculated from the time your code begins executing until it returns or otherwise terminates, rounded up to the nearest 100ms. The price depends on the amount of memory you allocate to your function. You are charged $0.00001667 for every GB-second used.
+
 REPORT RequestId: 0a28cd44-9475-11e7-a8f8-11f3df1b4e23	Duration: 871.20 ms	Billed Duration: 900 ms Memory Size: 128 MB	Max Memory Used: 54 MB	
 
 How to calculate Lambda costs
 
 Example:
-Your lambda function has 128 MB of allocated memory. It is executed 20 million times per month and runs for 800 ms each time it executed. What would you be charged?
+Your lambda function has 128 MB of allocated memory. It is executed 20 million times per month and runs for 800 ms each time it is executed. What would you be charged?
 
 Cost breakdown
 
-Monthly compute charges
+This information is obtained from AWS Lambda Pricing - https://aws.amazon.com/lambda/pricing/
+
+### Monthly compute charges
+
 The monthly compute price is $0.00001667 per GB-s and the free tier provides 400,000 GB-s.
 
-Total compute (seconds) = 30M * (0.2sec) = 6,000,000 seconds
+Total compute (seconds) = 20M * (0.8sec) = 16,000,000 seconds
 
-Total compute (GB-s) = 6,000,000 * 128MB/1024 = 750,000 GB-s
+Total compute (GB-s) = 16,000,000 * 128MB/1024 = 2,000,000 GB-s
 
 Total Compute – Free tier compute = Monthly billable compute seconds
 
-750,000 GB-s – 400,000 free tier GB-s = 350,000 GB-s
+2,000,000 GB-s – 400,000 free tier GB-s = 1,600,000 GB-s
 
-Monthly compute charges = 350,000 * $0.00001667 = $5.83
+Monthly compute charges = 1,600,000 * $0.00001667 = $26.672 
 
- 
-
-Monthly request charges
+### Monthly request charges
 
 The monthly request price is $0.20 per 1 million requests and the free tier provides 1M requests per month.
 
 Total requests – Free tier request = Monthly billable requests
 
-30M requests – 1M free tier requests = 29M Monthly billable requests
+20M requests – 1M free tier requests = 19M Monthly billable requests
 
-Monthly request charges = 29M * $0.2/M = $5.80
+Monthly request charges = 19M * $0.2/M = $3.80 
 
- 
+### Total compute charges
 
-Total compute charges
+Total charges = Compute charges + Request charges = $26.672 + $3.80 = $30.472 per month
 
-Total charges = Compute charges + Request charges = $5.83 + $5.80 = $11.63 per month
+$30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday.
+
+
 
 
 
