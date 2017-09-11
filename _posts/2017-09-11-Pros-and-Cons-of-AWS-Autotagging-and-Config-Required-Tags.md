@@ -3,23 +3,23 @@ The Pros and Cons of AWS Autotagging and Config Rule: Required tags
 
 NOTE: If you go with Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets>
 
-|Pros                                             |Cons  |
-|--:                                              |--:   |
-|You can autotag resources as shown above in NOTE.|
-|You can send automatic email alerts to all users |
-|when an improperly tagged resource is detected.  |
-|You can modify the lambda code whenever you want |
- to fit your needs.                               
-|                                                 |
-|                                                 |
-|                                                 |
-|                                                 |
+|Pros                                                  |Cons      |
+|--:                                                   |--:                                                                  |
+|You can autotag resources.                            |You must have a higher level of understanding of how cloudformation,      cloudwatch, cloudtrail, AMI roles, AMI groups, and lambda code work together                                                 |
+|You can send automatic email alerts.                  |                                                                     |
+|The lambda function is modifiable to fit your needs.  |                                                                     |
+
+
+|Pros                                                            |Cons                                 |
+|--:                                                             |--:                                  |
+|You can see a list of untagged resourcesin the Config dashboard.|You cannot autotag resources.        |
+|Setting up the required tags config rule is very easy.          |                                     |
+|You can send SNS email alerts as well.                          |                                     |
 
 
 
-You can modify the lambda code whenever you want to fit your needs.
 
-You can autotag and send SNS alerts at a very low cost.
+
 
 Example:
 
@@ -118,20 +118,6 @@ $30.472 dollars each month might seem a lot, but this is because we are hypothet
 
 
 
-
-
-
-Cons:
-
-A higher level of understanding of how cloudformation, cloudwatch, cloudtrail, AMI roles, AMI groups, and lambda code is required.
-
-
-
-You can see a list of untagged resources in the AWS Config dashboard in one place.
-
-You can set up the required tags config rule very easily with the provided template.
-
-You can set up SNS email alerts as well (but the format of the message is not modifiable).
 
 
 
