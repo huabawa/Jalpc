@@ -13,23 +13,39 @@ You can send automatic email alerts to all users when an improperly tagged resou
 
 You can modify the lambda code whenever you want to fit your needs.
 
+You can autotag and send SNS alerts at a very low cost.
+
+Example:
+
+## Cost breakdown
+
+### CloudFormation
 "There is no additional charge for AWS CloudFormation." - https://aws.amazon.com/cloudformation/pricing/
 
-Amazon CloudWatch Logs*
+### CloudWatch
+##### Amazon CloudWatch Logs*
 $0.50 per GB ingested**
 $0.03 per GB archived per month***
 Data Transfer OUT from CloudWatch Logs is priced equivalent to the “Data Transfer OUT from Amazon EC2 To” and “Data Transfer OUT from Amazon EC2 to Internet” tables on the EC2 Pricing Page.
-Amazon CloudWatch Events - Custom Events****
+##### Amazon CloudWatch Events - Custom Events****
 $1.00 per million custom events generated*****
+- https://aws.amazon.com/cloudwatch/pricing/
 
-https://aws.amazon.com/cloudwatch/pricing/
-
+### CloudTrail
 There is no charge from AWS CloudTrail for creating a trail. By creating a CloudTrail trail, you can deliver two types of events to your Amazon S3 bucket.
 
 Management Events: Represent administrative type of account activity for AWS services. For example, CloudTrail delivers Management Events for API calls such as launching EC2 instances or creating S3 buckets. The first copy of Management Events within each region is delivered free of charge. Additional copies of Management Events are charged at $2.00 per 100,000 events.
 Data Events: Represent data or object level account activity for AWS resources. For example, CloudTrail delivers Data Events for S3 object level API such as Get, Put, Delete and List actions. Data Events are recorded only for the buckets you specify and are charged at $0.10 per 100,000 events.
+- https://aws.amazon.com/cloudtrail/pricing/
 
-https://aws.amazon.com/cloudtrail/pricing/
+Example:
+
+Charges for CloudFormation = $0 
+Charges for 2 GB of CloudWatch Logs  = $0.50 per GB * 2 + $0.03 per GB * 2 = $1.06
+Charges for 1 million generated custom CloudWatch Events = $1.00
+Charges for first copy of 150,000 Management events from CloudTrail = 
+Charges for second copy of 150,000 Management events from CloudTrail = 
+Charges for 1M data events from CloudTrail = 
 
 
 
