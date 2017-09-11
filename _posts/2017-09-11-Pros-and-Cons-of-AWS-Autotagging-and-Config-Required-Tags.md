@@ -9,7 +9,7 @@ NOTE: If you go with Autotagging, the autotagged resources are EC2 Instances, vo
 |You can send automatic email alerts to all users |
 |when an improperly tagged resource is detected.  |
 |You can modify the lambda code whenever you want |
-|to fit your needs.                               |
+ to fit your needs.                               
 |                                                 |
 |                                                 |
 |                                                 |
