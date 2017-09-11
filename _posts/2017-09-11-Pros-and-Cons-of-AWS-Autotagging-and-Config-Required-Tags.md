@@ -1,15 +1,21 @@
 
 The Pros and Cons of AWS Autotagging and Config Rule: Required tags
 
-|Pros |Cons  |
-|--:  |--:   |
-|     |      |
+NOTE: If you go with Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets>
 
-You can autotag EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets
+|Pros                                             |Cons  |
+|--:                                              |--:   |
+|You can autotag resources as shown above in NOTE.|
+|You can send automatic email alerts to all users |
+|when an improperly tagged resource is detected.  |
+|You can modify the lambda code whenever you want |
+|to fit your needs.                               |
+|                                                 |
+|                                                 |
+|                                                 |
+|                                                 |
 
-Autotagged resources: EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets
 
-You can send automatic email alerts to all users when an improperly tagged resource (EC2 instance, volume, snapshot, AMI, etc. shown above) is detected.
 
 You can modify the lambda code whenever you want to fit your needs.
 
@@ -46,6 +52,8 @@ Charges for 1 million generated custom CloudWatch Events = $1.00
 Charges for first copy of 150,000 Management events from CloudTrail = 
 Charges for second copy of 150,000 Management events from CloudTrail = 
 Charges for 1M data events from CloudTrail = 
+Charges for 10,000 SNS tag alert emails = $2 * 10,000/100,000 = $0.2
+
 
 Notification Deliveries
 Endpoint Type	Free Tier	Price
