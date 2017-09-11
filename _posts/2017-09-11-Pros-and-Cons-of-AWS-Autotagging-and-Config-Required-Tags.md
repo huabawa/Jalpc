@@ -74,6 +74,7 @@ You are charged for the total number of requests across all your functions. Lamb
 
 First 1 million requests per month are free
 $0.20 per 1 million requests thereafter ($0.0000002 per request)
+
 Duration
 Duration is calculated from the time your code begins executing until it returns or otherwise terminates, rounded up to the nearest 100ms. The price depends on the amount of memory you allocate to your function. You are charged $0.00001667 for every GB-second used.
 
@@ -116,8 +117,7 @@ Monthly request charges = 19M * $0.2/M = $3.80
 
 Total charges = Compute charges + Request charges = $26.672 + $3.80 = $30.472 per month
 
-$30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday.
-
+$30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday. The acutal cost is actually much lower in our case because both the compute time per month and the number of executions in each month are within the free tier range.
 
 
 
