@@ -32,9 +32,13 @@ Pricing information for CloudFormation, CloudTrail, CloudWatch, SNS and Lambda
 
 ### CloudWatch 
 ##### Amazon CloudWatch Logs*
+
 $0.50 per GB ingested**
+
 $0.03 per GB archived per month***
+
 Data Transfer OUT from CloudWatch Logs is priced equivalent to the “Data Transfer OUT from Amazon EC2 To” and “Data Transfer OUT from Amazon EC2 to Internet” tables on the EC2 Pricing Page.
+
 ##### Amazon CloudWatch Events - Custom Events****
 $1.00 per million custom events generated*****
 - https://aws.amazon.com/cloudwatch/pricing/
