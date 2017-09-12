@@ -109,17 +109,24 @@ Monthly request charges = 19M * $0.2/M = $3.80
 
 Total charges = Compute charges + Request charges = $26.672 + $3.80 = $30.472 per month
 
-$30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday. The actual cost is actually much lower in our case because both the compute time per month and the number of executions in each month are within the free tier range. Furthermore, the cost estimation for the other AWS services are overestimated as well to show you how costly it can be when the services are working in concert.
+$30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday. The actual cost is actually much lower when both the compute time per month and the number of executions in each month are within the free tier range. Furthermore, the cost estimation for the other AWS services are overestimated as well to show you how costly it can be when the services are working in concert.
 
 ### Example Cost breakdown:
 
 Charges for CloudFormation = $0 
+
 Charges for 2 GB of CloudWatch Logs  = $0.50 per GB * 2 + $0.03 per GB * 2 = $1.06
+
 Charges for 1 million generated custom CloudWatch Events = $1.00
+
 Charges for first copy of 150,000 Management events from CloudTrail = $0 
+
 Charges for second copy of 150,000 Management events from CloudTrail = $2 * 150,000/100,000 = $3
+
 Charges for 1M data events from CloudTrail = $0.10 * 1M/100,000 = $1
+
 Charges for 10,000 SNS tag alert emails = $2 * 10,000/100,000 = $0.2
+
 Charges for lambda function with 128 MB allocated memory, 20 million executions per month, and 800 ms duration = $30.472/month
 
 Total = $6.26 + $30.472/month 
@@ -145,6 +152,7 @@ Example:
 
 Total = $0.03 + $6.00/per month
 
+## Conclusion
 These cost estimations are merely for showing you how to calculate the costs for each option, not for convincing you to choose one over the other. Just as a reminder, AWS Config cannot automatically tag untagged resources! I hope you enjoyed reading this article on the pros and cons as well as how to calculate the costs of using AWS Autotagging and AWS Config.
 
 
