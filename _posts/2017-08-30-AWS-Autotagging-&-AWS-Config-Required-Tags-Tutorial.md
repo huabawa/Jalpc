@@ -85,7 +85,7 @@ Here are the steps:
 7. Select Default under Configure version/alias.
 8. Click on Configure details on the bottom right corner to create your rule. 
 
-Now, create another cloud watch rule for s3 bucket. Follow the steps below.
+Now, create another cloud watch rule for s3 bucket. Follow the steps below (some steps are the same as the steps for rds).
 
 1. Same as above.
 2. Choose s3 for service name and AWS API Call via CloudTrail for event type.
