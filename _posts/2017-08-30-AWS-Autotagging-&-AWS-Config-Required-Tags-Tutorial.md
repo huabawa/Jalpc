@@ -327,7 +327,7 @@ We created an autotagging service that automatically tags resources with the own
 How do we ensure that people are tagging all the time? The SNS code that we wrote solves this problem. Another way 
 to detect users that aren't following the tagging rules is this solution, Required tags, that I will introduce to you in the following section.
 
-## Required Tags
+## AWS Config: Required Tags Tutorial
 
 You can use AWS config to quickly find all the users who are not tagging their resources with the required tags. In the steps below, I will show you how that's done.
 
