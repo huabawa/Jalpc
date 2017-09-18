@@ -63,18 +63,13 @@ Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup un
 
    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.*
 
-![alt text][logo]
-
-[logo]: https://github.com/huabawa/Jalpc/tree/master/_posts/AM9.png
-
 Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
 
 ## Next step: Auototag RDS instances and S3 buckets.
 
 #### Create two CloudWatch Rules. One for S3 bucket and one for RDS.
 
-When the autotagging template is deployed in cloudformation, a cloudwatch events rule is created. If you now go to cloudwatch and click
-on rules under events, you will see New-EC2Resource-Event. Open it and you will see the event pattern, which has four event names:
+When the autotagging template is deployed in cloudformation, a cloudwatch events rule is created. If you now go to cloudwatch and click on rules under events, you will see New-EC2Resource-Event. Open it and you will see the event pattern, which has four event names:
 "CreateVolume", "RunInstances", "CreateImage", and "CreateSnapshot".
 
 If we want to autotag rds instances, we would need to... Yes, you guessed it. We would need to create an event rule for rds.
@@ -321,15 +316,16 @@ Wait! You're not done yet. Before you leave this page, go to SNS to create a top
 8. Select Email for Protocol. Type in your email and click Create subscription.
 9. You will receive a subscription confirmation in a few minutes. Confirm it and then paste the topic arn into your lambda function.
 
+The final step is to add all of the users in the account to the IAM group created by the template. It is called something like, Autotag-ManageEC2InstancesGroup. 
+
 Congrats! You have now completed the Autotagging tutorial. 
 
 Summary of what we have just done:
 
-We created an autotagging service that automatically tags EC2 instances, volumes, snapshots, AMIs, and RDS instances with the owner and principal ID, and 
-automatically sends you an email when it detects improperly tagged resources. Isn't that great?
+We created an autotagging service that automatically tags resources with the owner and principal ID and automatically sends you an email when it detects improperly tagged resources. Isn't that great?
 
 How do we ensure that people are tagging all the time? The SNS code that we wrote solves this problem. Another way 
-to keep track of users that aren't following the tagging rules is this solution, Required tags, that we'll introduce in the following section.
+to detect users that aren't following the tagging rules is this solution, Required tags, that I will introduce to you in the following section.
 
 ## Required Tags
 
