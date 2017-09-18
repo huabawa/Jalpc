@@ -1,4 +1,4 @@
-# All About AWS Autotagging & Cost Tracking
+# AWS EC2, RDS, and S3 Autottagging Tutorial
 
 Sometimes it can be really hard to track down who is using the correct tags on AWS, especially when you have many people launching instances in different regions across the United States.
 
@@ -59,7 +59,7 @@ https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.t
     *Note: Make sure CloudTrail is enabled in this region because cloudwatch events will not work if it is not turned on.*
 
 2. When the autotag stack is created, you will see CREATE_COMPLETE in the status.
-Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under Resources as shown in the screenshot.
+Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under Resources.
 
    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.*
 
@@ -69,7 +69,9 @@ Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup un
 
 Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
 
-#### Next step: Auototag RDS instances and Get automatic SNS email alerts whenever an improperly tagged resource is detected
+## Next step: Auototag RDS instances and S3 buckets.
+
+#### Create two CloudWatch Rules. One for S3 bucket and one for RDS.
 
 When the autotagging template is deployed in cloudformation, a cloudwatch events rule is created. If you now go to cloudwatch and click
 on rules under events, you will see New-EC2Resource-Event. Open it and you will see the event pattern, which has four event names:
@@ -85,10 +87,18 @@ Here are the steps:
 4. Add CreateDBCluster and CreateDBInstance.
 5. On the right-hand side, click on add target.
 6. Select Lambda Function and choose AutoTag-CFAutoTag-XXXXXXX (the name of the autotag lambda function created by the template).
-7. Select Alias and then PROD.
-8. Click on Configure details. 
+7. Select Default under Configure version/alias.
+8. Click on Configure details on the bottom right corner to create your rule. 
 
-Now that we have created the CloudWatch Events Rule, what do we do next?
+Now, create another cloud watch rule for s3 bucket. Follow the steps below.
+
+1. Same as above.
+2. Choose s3 for service name and AWS API Call via CloudTrail for event type.
+3. Same as above.
+4. Add CreateBucket.
+5, 6, 7, 8. Same as above.
+
+Now that we have created the CloudWatch Rules, what do we do next?
 
 1. Edit the Lambda code
 2. Create a new IAM Role
@@ -132,51 +142,172 @@ Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, a
 
 Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
 
-1. 
+To save you time, copy and paste the following lambda code to your lamda function. Remember to enter your own accountID, access key id, and secret access key in the code.
+
 ```python
-idc = '' # below ids = []
-```
-2. 
-```python
-accountID = 'XXXXXyouraccountID' # below userType = detail['userIdentity']['type']
-```
-3. 
-```python
-rds = boto3.client('rds') # below ec2 = boto3.resource('ec2')
-```
-4. 
-```python
-elif eventname == 'CreateDBInstance':
-idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() #arn:aws:rds:us-east-1:509248752274:db:affafafafaa
-logger.info(idc)
-```
-5.  
-```python
-instances = [] # add these lines beneath this line, print('Tagging resource ' + resourceid), which is in the 'if ids: block'
-for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
-    instances.append(status['InstanceId'])
-def filterInstances(instances):
-    filtertemplate = [{'Name': 'resource-id','Values': instances}]
-    return filtertemplate
-for instance in instances:
-    tags = ec2.meta.client.describe_tags(Filters=filterInstances(instances))
-print(tags) # print the tags so you can see them in CloudWatch logs
-print(ids) # print the resource IDs so you can see them in CloudWatch logs
-for tag in tags['Tags']:
-    if tag['Key'] != 'Project' or tag['Key'] != 'End_date':
-    print ('SNS ready')
-    sns = boto3.client('sns', aws_access_key_id='AAAAAAXXXXXXXtypeyourown',        
-    aws_secret_access_key='ifodsafdiosio8987329OIEJSiitypeyourown')
-    response = sns.publish(
-        TopicArn='arn:aws:sns:us-east-1:59090909090:Autotag',
-        Message= user + '(' + principal + ') did not include Project and End_date tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
-        Subject='AutoTag Alert'
-        )
-```
-6. 
-```python
-elif idc: # Add these lines after the if 'ids:' block
-    rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}])
+from __future__ import print_function
+import json
+import boto3
+import logging
+import time
+import datetime
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+def lambda_handler(event, context):
+    #logger.info('Event: ' + str(event))
+    #print('Received event: ' + json.dumps(event, indent=2))
+
+    ids = []
+    idc = ''
+    ide = ''
+
+    try:
+        region = event['region']
+        detail = event['detail']
+        eventname = detail['eventName']
+        arn = detail['userIdentity']['arn']
+        principal = detail['userIdentity']['principalId']
+        userType = detail['userIdentity']['type']
+        accountID = 'change to your own accountID' # Change to your own accountID
+        
+        if userType == 'IAMUser':
+            user = detail['userIdentity']['userName']
+
+        else:
+            user = principal.split(':')[1]
+
+
+        logger.info('principalId: ' + str(principal))
+        logger.info('region: ' + str(region))
+        logger.info('eventName: ' + str(eventname))
+        logger.info('detail: ' + str(detail))
+
+        ec2 = boto3.resource('ec2')
+        rds = boto3.client('rds')
+        # s3 = boto3.resource('s3')
+        client = boto3.client('s3')
+
+        if eventname == 'CreateVolume':
+            ids.append(detail['responseElements']['volumeId'])
+            logger.info(ids)
+
+        elif eventname == 'RunInstances':
+            items = detail['responseElements']['instancesSet']['items']
+            for item in items:
+                ids.append(item['instanceId'])
+            logger.info(ids)
+            logger.info('number of instances: ' + str(len(ids)))
+
+            base = ec2.instances.filter(InstanceIds=ids)
+
+            #loop through the instances
+            for instance in base:
+                for vol in instance.volumes.all():
+                    ids.append(vol.id)
+                for eni in instance.network_interfaces:
+                    ids.append(eni.id)
+
+        elif eventname == 'CreateImage':
+            ids.append(detail['responseElements']['imageId'])
+            logger.info(ids)
+
+        elif eventname == 'CreateSnapshot':
+            ids.append(detail['responseElements']['snapshotId'])
+            logger.info(ids)
+        
+        elif eventname == 'CreateDBInstance':
+            idc = 'arn:aws:rds:' + region + ':' + accountID + ':db:' + detail['requestParameters']['dBInstanceIdentifier'].lower() # example: arn:aws:rds:us-east-1:509248752274:db:affafafafaa
+            logger.info(idc)
+            
+        elif eventname == 'CreateBucket':
+            ide = detail['requestParameters']['bucketName']
+            logger.info(ide)
+            
+        else:
+            logger.warning('Not supported action')
+
+        if ids:
+            for resourceid in ids:
+                print('Tagging resource ' + resourceid)
+            
+            instances = []
+            for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
+                instances.append(status['InstanceId'])
+
+            def filterInstances(instances):
+                filtertemplate = [{'Name': 'resource-id','Values': instances}]
+                return filtertemplate
+
+            for instance in instances:
+                tags = ec2.meta.client.describe_tags(Filters=filterInstances(instances))
+            
+            print(tags)
+            print(ids)
+            # for index, item in enumerate(my_list):
+            for index, tag in enumerate(tags['Tags']):
+                if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
+                    print ('SNS ready')
+                    sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
+                    response = sns.publish(
+                        TopicArn='arn:aws:sns:us-west-2:0000000000:Autotag',
+                        Message= user + '(' + principal + ') did not include Name, Project and End_date tags tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
+                        Subject='AutoTag Alert'
+                    )
+                if index == 1:
+                    break
+            ec2.create_tags(Resources=ids, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}])
+        elif idc:
+            response = rds.list_tags_for_resource(ResourceName=idc)
+            for index, tag in enumerate(response['TagList']):
+                if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
+                    print ('SNS ready')
+                    sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
+                    response = sns.publish(
+                        TopicArn='arn:aws:sns:us-west-2:0000000000000:Autotag',
+                        Message= user + '(' + principal + ') did not include Name, Project and End_date tags in ' + idc + '. Please add these tags asap. Thanks!',
+                        Subject='AutoTag Alert'
+                    )
+                if index == 1:
+                    break
+            print(response)
+            rds.add_tags_to_resource(ResourceName=idc, Tags=[{'Key': 'Owner', 'Value': user}, {'Key': 'PrincipalId', 'Value': principal}])    
+        elif ide:
+            client.put_bucket_tagging(
+                Bucket=ide,
+                Tagging={
+                    'TagSet': [
+                        {
+                            'Key': 'Owner',
+                            'Value': user
+                        },
+                        {
+                            'Key': 'PrincipalId',
+                            'Value': principal
+                        },
+                    ]
+                }
+            )
+            response = client.get_bucket_tagging(
+                Bucket=ide
+            )
+            for index, tag in enumerate(response['TagSet']):
+                if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
+                    print ('SNS ready')
+                    sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
+                    response = sns.publish(
+                        TopicArn='arn:aws:sns:us-west-2:00000000000000:Autotag',
+                        Message= user + '(' + principal + ') did not include Name, Project and End_date tags in ' + ide + '. Please add these tags asap. Thanks!',
+                        Subject='AutoTag Alert'
+                    )
+                if index == 1:
+                    break
+        logger.info(' Remaining time (ms): ' + str(context.get_remaining_time_in_millis()) + '\n')
+        return True
+    except Exception as e:
+        logger.error('Something went wrong: ' + str(e))
+        return False
 ```
 Wait! You're not done yet. Before you leave this page, go to SNS to create a topic and subscribe to it. Here are the steps.
 
@@ -190,7 +321,7 @@ Wait! You're not done yet. Before you leave this page, go to SNS to create a top
 8. Select Email for Protocol. Type in your email and click Create subscription.
 9. You will receive a subscription confirmation in a few minutes. Confirm it and then paste the topic arn into your lambda function.
 
-Congrats! You have now completed the Autotagging section. 
+Congrats! You have now completed the Autotagging tutorial. 
 
 Summary of what we have just done:
 
