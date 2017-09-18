@@ -1,5 +1,5 @@
 
-AWS Autotagging vs. AWS Config Rule: Required tags
+# AWS Autotagging vs. AWS Config Rule: Required tags
 
 NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets>
 
