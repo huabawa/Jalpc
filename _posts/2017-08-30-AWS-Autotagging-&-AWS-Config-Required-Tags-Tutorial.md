@@ -65,7 +65,7 @@ Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup un
 
 Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
 
-## Next step: Auototag RDS instances and S3 buckets.
+### Next step: Auototag RDS instances and S3 buckets.
 
 #### Create two CloudWatch Rules. One for S3 bucket and one for RDS.
 
