@@ -317,7 +317,7 @@ Wait! You're not done yet. Before you leave this page, go to SNS to create a top
 8. Select Email for Protocol. Type in your email and click Create subscription.
 9. You will receive a subscription confirmation in a few minutes. Confirm it and then paste the topic arn into your lambda function.
 
-The final step is to add all of the users in the account to the IAM group created by the template. It is called something like, Autotag-ManageEC2InstancesGroup. 
+The final step is to add all of the users in the account to the IAM group created by the template. It is called something like, Autotag-ManageEC2InstancesGroup. If you want autotagging to work in another region, you have to set up autotagging in that region by following the same steps as shown above.
 
 Congrats! You have now completed the Autotagging tutorial. 
 
