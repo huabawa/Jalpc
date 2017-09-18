@@ -91,7 +91,8 @@ Now, create another cloud watch rule for s3 bucket. Follow the steps below.
 2. Choose s3 for service name and AWS API Call via CloudTrail for event type.
 3. Same as above.
 4. Add CreateBucket.
-5, 6, 7, 8. Same as above.
+
+5., 6., 7., 8. Same as above.
 
 Now that we have created the CloudWatch Rules, what do we do next?
 
