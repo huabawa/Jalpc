@@ -2,7 +2,7 @@
 
 Here are the steps:
 Go to Terminal.
-1. ```cd /usr/loca/mysql/bin```
+1. ```cd /usr/local/mysql/bin```
 2. ```./mysql -h <endpoint> -P <port> -u <user> -p```
 Example: mysql -h myinstance.123456789012.us-east-1.rds.amazonaws.com -P 3306 -u mymasteruser -p
 3. Enter the master user password when prompted.
@@ -43,9 +43,10 @@ In order to use the github source code, you need to enter your own host, port, u
   "user" = "", # "root"
   "password" = ""
 ``` 
-Here is full storage.R code:
+Here is the full storage.R code:
 ```R
 library(RMySQL)
+library(shiny)
 
 options(mysql = list(
   "host" = "",
@@ -86,6 +87,76 @@ load_data_mysql <- function() {
 }
 ```
 When you're done, you should be able to see the MySQL table that you created.
+
+## How to Show Your Data in the MySQL database in a timeseries graph in Shiny
+
+library(shiny)
+library(RMySQL)
+library(plotly)
+
+ui <- fluidPage(
+  plotlyOutput("plot"),
+  verbatimTextOutput("event")
+)
+
+server <- function(input, output) {
+  library(RMySQL)
+  library(plotly)
+  options(mysql = list(
+    "host" = "",
+    "port" = ,
+    "user" = "",
+    "password" = ""
+  ))
+  
+  DB_NAME <- ""
+  TABLE_NAME <- ""
+  
+  save_data_mysql <- function(data) {
+    db <- dbConnect(MySQL(), dbname = DB_NAME,
+                    host = options()$mysql$host,
+                    port = options()$mysql$port,
+                    user = options()$mysql$user,
+                    password = options()$mysql$password)
+    query <-
+      sprintf("INSERT INTO %s (%s) VALUES ('%s')",
+              TABLE_NAME,
+              paste(names(data), collapse = ", "),
+              paste(data, collapse = "', '")
+      )
+    dbGetQuery(db, query)
+    dbDisconnect(db)
+  }
+  load_data_mysql <- function() {
+    db <- dbConnect(MySQL(), dbname = DB_NAME,
+                    host = options()$mysql$host,
+                    port = options()$mysql$port,
+                    user = options()$mysql$user,
+                    password = options()$mysql$password)
+    query <- sprintf("SELECT * FROM %s", TABLE_NAME)
+    data <- dbGetQuery(db, query)
+    dbDisconnect(db)
+    
+    data
+  }
+  
+  
+  # renderPlotly() also understands ggplot2 objects!
+  output$plot <- renderPlotly({
+    plot_ly(data, x = ~, y = ~, type = "scatter")
+  })
+  
+  output$event <- renderPrint({
+    d <- event_data("plotly_hover")
+    if (is.null(d)) "Hover on a point!" else d
+  })
+}
+
+shinyApp(ui, server)
+
+  
+
+
 
 ## How to show S3 bucket CSV file in RStudio
 
