@@ -1,6 +1,10 @@
-## How to install a ruby on rails site on amazon Ubuntu Server 16.04
+# How to install a ruby on rails site on amazon Ubuntu Server 16.04
+
+This tutorial shows you how to install ruby on rails site on AWS ubuntu server 16.04. As a reminder, you will be installing a crowdfunding site, which means that if you want to this site to be a functional site, you need to set up, among many other things, the payment gateway. Thus, this tutorial can only be treated as an alpha ruby site example that only serves our main goal of learning how to set up a ruby on rails site on a virtual machine, and so, please do not assume that by the end of this tutorial, you will get a fully functional crowdfunding site. 
 
 Before following the steps below, please go to EC2 by typing in EC2 in the AWS services search bar in your AWS console.
+
+## First Step: Create an EC2 instance
 
 1. Select Launch Instance
 2. Select the Free Tier Eligible Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
@@ -15,7 +19,10 @@ Before following the steps below, please go to EC2 by typing in EC2 in the AWS s
 11. In Terminal, type and enter: ssh -i "keypair.pem" ubuntu@ec0-22-22-11-11.compute-1.amazonaws.com
 12. When have successfully connected to the ubuntu instance, you will get something like this, ubuntu@ec2-00-000-00-000:
 
+## Second Step: Go to Terminal
+
 Type the following into Terminal, one line at a time.
+
 ```unix
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
@@ -84,9 +91,9 @@ Type ```Public DNS (IPv4):3000``` into your browser. Example: http://ec2-00-00-0
 
 Voila!! The Catarse website opens up.
 
-For a video about how to do this, click on this link. https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s
+For a video about how to do this, click on this youtube link. https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s
 
-Common Issues:
+## Common Issues:
 
 If this shows up in Terminal when you try to run bower install,
 ```Prefix the choice with ! to persist it to bower.json.```
