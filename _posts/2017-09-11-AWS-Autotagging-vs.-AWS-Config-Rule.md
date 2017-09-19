@@ -1,11 +1,15 @@
 
 # AWS Autotagging vs. AWS Config Rule: Required tags
 
+Since I have introduced two ways to detect improperly tagged resources in this tutorial, I would like to help you distinguish between the two, so you know which solution works best for you and how to manage the cost of the option that you choose. 
+
 NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets>
+
+## Pros and Cons AWS Autotagging and AWS Config Rule: Required tags
 
 |Pros                                                  |Cons      |
 |--:                                                   |--:                                                                  |
-|You can autotag resources.                            |You must have a higher level of understanding of how cloudformation,      cloudwatch, cloudtrail, AMI roles, AMI groups, and lambda code work together                                                 |
+|You can autotag resources.                            |You must have a higher level of understanding of how cloudformation,      cloudwatch, cloudtrail, AMI roles, AMI groups, and lambda code work together                                                |
 |You can send automatic email alerts.                  |                                                                     |
 |The lambda function is modifiable to fit your needs.  |                                                                     |
 
