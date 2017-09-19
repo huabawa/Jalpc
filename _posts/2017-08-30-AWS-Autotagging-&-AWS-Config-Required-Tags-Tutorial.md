@@ -1,6 +1,6 @@
 # AWS EC2, RDS, and S3 Autottagging Tutorial
 
-In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. 
+In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. You should also learn why Auotagging is important to understand the whole purpose of setting up Autotagging.
 
 Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
 
@@ -142,8 +142,26 @@ copy_source = {
 }
 s3.copy(copy_source, 'otherbucket', 'otherkey')
 ```
+**Next Step: Learn how SNS works** 
+## How to set up EC2 SNS notifications
+Follow the steps below to set up EC2 start,stop,terminate SNS notifications.
 
+1. Go to SNS in AWS Services.
+2. Go to Topics. Create new topic.
+3. Choose a topic name, like EC2-Start-Stop
+4. Select (tick) the topic. Under Actions, select Subscribe to topic.
+5. Select a protocol. Email is preferred. For endpoint, type in your email.
+You will a receive an email asking you to confirm the subscription.
+6. Go to CloudWatch in AWS Services.
+7. Click Events and then click Create rule.
+8. Under Service Name, choose EC2.
+9. Under Event Type, choose EC2 Instance State-change Notification
+10. Choose any state or specific states depending on what you want.
+11. Click Add Target. Scroll down and select SNS topic.
+12. Select the topic that you had just created.
+13. Click Configure Details. Write a name and description. Then, click Create rule.
 
+**Next Step: Learn Why Autotagging is Important**
 Sometimes it can be really hard to track down who is using the correct tags on AWS, especially when you have many people launching instances in different regions across the United States.
 
 So, what strategy could you use to solve a problem of this kind?
@@ -182,7 +200,7 @@ Before we get into some lambda code, let's first understand something even more 
 
 After reading about cost tracking, you might ask what if the users forget to tag their resources?
 
-## Autagging 
+## Next Step: Set up Autagging 
 
 A way to solve this problem is Autotagging.
 
@@ -203,7 +221,7 @@ https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.t
     *Note: Make sure CloudTrail is enabled in this region because cloudwatch events will not work if it is not turned on.*
 
 2. When the autotag stack is created, you will see CREATE_COMPLETE in the status.
-Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under Resources.
+Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under the Resources tab of your created CloudFormation stack.
 
    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.*
 
