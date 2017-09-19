@@ -1,7 +1,8 @@
 # AWS EC2, RDS, and S3 Autottagging Tutorial
 
-In order to 
-Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. 
+In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. 
+
+Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
 
 ## How to parse the AWS detailed billing report located in S3 with Boto3
 
@@ -19,11 +20,11 @@ But before that, let's first understand why we are using boto3.
 
 ### What is Boto3?
 
-Like the boto3 documentation says, Boto is the Amazon Web Services (AWS) SDK for Python. This means you can write your own python software for EC2 and S3. Isn't that amazing? The user doesn't have to open the AWS console at all to open the s3 bucket!
+Like the boto3 documentation says, Boto3 is the Amazon Web Services (AWS) SDK for Python. This means you can write your own python software for all kinds of AWS resources (eg. EC2 and S3). Isn't that amazing? The user doesn't have to open the AWS console at all to open the s3 bucket!
 
 ### How to Install Boto3.
 
-Trust me it's simple. Just follow the steps below to set up Boto3 on your computer. When you get stuck, don't panic!
+Trust me it's simple. Just follow the steps below to set up Boto3 on your computer.
 
 1. Install pip if you don't have pip installed already. Update pip to make sure it is the latest version.
 Link to pip installation documentation: https://pip.pypa.io/en/stable/installing/
@@ -33,10 +34,18 @@ Link to pip installation documentation: https://pip.pypa.io/en/stable/installing
 Congrats! You have successfully installed boto3. The next step will be to write some python code to print out the S3 bucket list, list the contents of an S3 bucket, and more.
 
 ### Setting up AWS CLI
-
+**You need to set up AWS CLI in order to access your AWS resources**
 When you have installed AWS CLI, check that you have successfully installed it by typing, aws --version, in your terminal.
 Something like this, aws-cli/1.11.136 Python/2.7.13 Darwin/15.6.0 botocore/1.6.3, should appear.
-Type into the terminal, aws configure, to configure AWS CLI. For precise instructions, go to http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+Type into the terminal, aws configure, to configure AWS CLI. 
+**Configure your AWS CLI to enter your following information.
+AWS Access Key ID [None]: 
+AWS Secret Access Key [None]: 
+Default region name [None]: 
+Default output format [None]:  
+**
+
+For more information, go to http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
 ### How to print out the S3 bucket list
 
@@ -52,6 +61,10 @@ print("Bucket List: %s" % buckets)
 ```
 
 ### Listing Contents of a S3 bucket
+
+Type into terminal, python.
+Then, type the following.
+
 ```python
 import boto3
 s3 = boto3.resource('s3')
@@ -62,6 +75,11 @@ for object in my_bucket.objects.all():
   * Click Return twice.
 
 ### Downloading a file in S3 bucket
+
+Type into terminal, python.
+Then, type one of the following.
+
+Option 1:
 ```python
 import boto3
 s3 = boto3.resource('s3')
@@ -69,7 +87,7 @@ bucket = s3.Bucket('bucket_name')
 s3.meta.client.download_file('bucket_name', 'file.you.want.to.download', 'directory/name-of-output-file')
 ```
 
-Option2:
+Option 2:
 ```python
 import boto3
 s3 = boto3.resource('s3')
@@ -78,6 +96,10 @@ bucket.download_file(key, 'file-name')
 ```
 
 ### Uploading a file to S3 bucket
+
+Type into terminal, python.
+Then, type the following.
+
 ```python
 import boto3
 s3 = boto3.resource('s3')
@@ -86,6 +108,10 @@ s3.meta.client.upload_file('directory/file-name', 'bucket-name', 'file-name')
 ```
 
 ### Print and Save Parsed detailed billing report
+
+Type into terminal, python.
+Then, type the following.
+
 ```python
 import pandas
 raw = pandas.read_csv('Directory of saved csv')
@@ -94,11 +120,15 @@ filtered = raw.loc[:,'LinkedAccountId':'SubscriptionId'] # save parsed detailed 
 filtered.to_csv('OUT_FILE.csv') # saves in the same directory
 ```
 
-More Suggestions on how to parse detailed billing report: http://blog.backslasher.net/aws-billing.html
+More suggestions on how to parse the detailed billing report: http://blog.backslasher.net/aws-billing.html
 
-For detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
+For more detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
 
 ### Copying an object from one s3 bucket to another s3 bucket
+
+Type into terminal, python.
+Then, type the following.
+
 ```python
 import boto3
 # Get the service client
@@ -112,15 +142,6 @@ copy_source = {
 }
 s3.copy(copy_source, 'otherbucket', 'otherkey')
 ```
-
-
-
-
-
-
-
-
-
 
 
 Sometimes it can be really hard to track down who is using the correct tags on AWS, especially when you have many people launching instances in different regions across the United States.
