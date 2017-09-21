@@ -325,6 +325,10 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
+Jocelyn to write up Authentication in two ways
+  - How forms of auth apply (Key pairs, IAM User creds, etc)
+  - WARNINGS to people following her tutorials to keep them out of trouble
+
 #### Useful links:
 
 Connecting to a DB Instance Running the MySQL Database Engine
