@@ -6,6 +6,31 @@ In short, Autotagging is Lambda function plus other AWS technologies. Config Rul
 
 Both of these solutions are described in this tutorial, including their tradeoffs and costs involved.
 
+**WARNING: DO NOT give anyone else your AWS Security Credentials** 
+
+**AWS Authentication is a very important topic that users often overlook. If you give other people your security credentials, your account may be accessed and you may one day receive a large bill.**
+
+Let's go through how AWS Authentication works and what each of the following terms mean. 
+
+## AWS Authentication
+
+**Key Pair**
+When you launch an EC2 instance, you are required to have a key pair. You can either use an existing key pair or create a new key pair. The purpose of the key pair is to encrypt and decrypt data or login inforamtion. If you want to connect to your instance via SSH, you would need this key pair. So, please keep your key pair in a safe place on your computer. 
+
+**IAM User**
+All IAM users have the same account ID. Therefore, as an example, you need to add all of these IAM users to the Autotag IAM group to autotag all of the resources that they launch.
+
+**IAM Role**
+IAM Role gives certain services, ike Autotagging lambda function, permission to access certain resources or services. 
+
+**Access Key ID and Secret Access Key**
+When you are given an IAM user account, you received IAM user credentials. This included an access key ID and Secret Access Key. These are important when you want to use boto3 to programmatically access s3 buckets, SNS, ec2, rds, etc. 
+
+Your security credentials can also be used in the command line with AWS CLI where you enter your Access Key ID and Secret Access Key to store them in AWS configuration settings on your computer.
+
+For more information on understanding and how to get security credentials, visit this link http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys.
+
+## Back to our FIRST topic: Autotagging
 In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. You should also learn why Auotagging is important to understand the whole purpose of setting up Autotagging.
 
 Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
@@ -502,7 +527,7 @@ We created an autotagging service that automatically tags resources with the own
 How do we ensure that people are tagging all the time? The SNS code that we wrote solves this problem. Another way 
 to detect users that aren't following the tagging rules is this solution, Required tags, that I will introduce to you in the following section.
 
-## AWS Config: Required Tags Tutorial
+## NEXT TOPIC AWS Config: Required Tags Tutorial
 
 You can use AWS config to quickly find all the users who are not tagging their resources with the required tags. In the steps below, I will show you how that's done.
 
