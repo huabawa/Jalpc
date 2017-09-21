@@ -1,6 +1,6 @@
 # How to install a ruby on rails site on amazon Ubuntu Server 16.04
 
-This tutorial shows you how to install ruby on rails site on AWS ubuntu server 16.04. As a reminder, you will be installing a crowdfunding site, which means that if you want to this site to be a functional site, you need to set up, among many other things, the payment gateway. Thus, this tutorial can only be treated as an alpha ruby site example that only serves our main goal of learning how to set up a ruby on rails site on a virtual machine, and so, please do not assume that by the end of this tutorial, you will get a fully functional crowdfunding site. 
+This tutorial shows you how to install ruby on rails site on AWS ubuntu server 16.04. As a reminder, you will be installing a crowdfunding site, which means that if you want to use this site as a functional site, you need to set up, among many other things, the payment gateway. Thus, this tutorial can only be treated as an alpha ruby site example that only serves our main goal of learning how to set up a ruby on rails site on a virtual server, and so, please do not assume that by the end of this tutorial, you will get a fully functional crowdfunding site. 
 
 Before following the steps below, please go to EC2 by typing in EC2 in the AWS services search bar in your AWS console.
 
