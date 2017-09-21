@@ -8,7 +8,7 @@ Since it's easier to learn things by doing, let's assume that you have a detaile
 
 ## How to parse the AWS detailed billing report located in S3 with Boto3
 
-If you have an AWS linked account and you get errors like Access Denied, as shown below, when you want to get access to cost and usage reports, what should you do?
+If you have an AWS linked account and you get errors, like Access Denied, when you want to get access to cost and usage reports, what should you do?
 
 Luckily, there's a solution.
 
@@ -39,7 +39,7 @@ Congrats! You have successfully installed boto3. The next step will be to write 
 **You need to set up AWS CLI in order to access your AWS resources**
 When you have installed AWS CLI, check that you have successfully installed it by typing, aws --version, in your terminal.
 Something like this, aws-cli/1.11.136 Python/2.7.13 Darwin/15.6.0 botocore/1.6.3, should appear.
-Type into the terminal, aws configure, to configure AWS CLI. 
+Then, type into the terminal, aws configure, to configure AWS CLI. Below is what should show on your terminal screen.
 **Configure your AWS CLI to enter your following information.
 AWS Access Key ID [None]: 
 AWS Secret Access Key [None]: 
@@ -121,7 +121,6 @@ raw.loc[:,'LinkedAccountId':'SubscriptionId'] # display only columns 'LinkedAcco
 filtered = raw.loc[:,'LinkedAccountId':'SubscriptionId'] # save parsed detailed billing report
 filtered.to_csv('OUT_FILE.csv') # saves in the same directory
 ```
-
 More suggestions on how to parse the detailed billing report: http://blog.backslasher.net/aws-billing.html
 
 For more detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
@@ -156,7 +155,7 @@ Follow the steps below to set up EC2 start,stop,terminate SNS notifications.
 3. Choose a topic name, like EC2-Start-Stop
 4. Select (tick) the topic. Under Actions, select Subscribe to topic.
 5. Select a protocol. Email is preferred. For endpoint, type in your email.
-You will a receive an email asking you to confirm the subscription.
+You will receive an email asking you to confirm the subscription.
 6. Go to CloudWatch in AWS Services.
 7. Click Events and then click Create rule.
 8. Under Service Name, choose EC2.
@@ -173,7 +172,7 @@ So, what strategy could you use to solve a problem of this kind?
 
 Before we delve into this problem, let's understand why tagging is so important.
 
-Here is a list of reasons. Please don't skip this part. 
+Here is a list of reasons. Please don't skip this part. You are very close to becoming a cloud computing guru!
 
 1. Tags can help you track cost
 2. Tags can help you track AWS resource usage
@@ -209,7 +208,7 @@ After reading about cost tracking, you might ask what if the users forget to tag
 
 A way to solve this problem is Autotagging.
 
-The autotagging solution we'll be using is summarized below.
+**How the Autotagging solution we'll be using works is summarized below.**
 
 When a resource is created, an API call is made and recorded by CloudWatch. Then, a CloudWatch event rule triggers a lambda function providing it with event details.
 The lambda function extracts every resource ID and the user's identity and applies two tags, Owner and PrincipalId (current user’s aws:userid value), to the created resource.
@@ -220,13 +219,11 @@ When EC2 Instances, Amazon Elastic Block Store (EBS) volumes, EBS snapshots or A
 
 Follow the steps below to autotag your EC2 Instance, Amazon Elastic Block Store (EBS) volumes, EBS snapshots and Amazon Machine Images (AMIs).
 
-1. Deploy the cloudformation template in the region of your choosing to create an Autotag stack. Copy and paste the following Amazon S3 template URL.
-https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template
+1. Go to CloudFormation. You can either click [here](https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template) to download the template and upload it to S3 OR specify this Amazon S3 template URL https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template . You can click through with no effort, for example, you do not need to tag your stack. Deploy the cloudformation template in the region of your choosing to create an Autotag stack. 
 
     *Note: Make sure CloudTrail is enabled in this region because cloudwatch events will not work if it is not turned on.*
 
-2. When the autotag stack is created, you will see CREATE_COMPLETE in the status.
-Now you can assign IAM users to the created IAM group ManageEC2InstancesGroup under the Resources tab of your created CloudFormation stack.
+2. Once your CloudFormation stack has status CREATE_COMPLETE: Click on it's resources tab. There will be a Security Group with Logical ID ManageEC2InstancesGroup. The associated Physical ID is a link to this Security Group. Click on this link to manually add IAM Users that you want this stack applied to.
 
    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.*
 
@@ -252,7 +249,7 @@ Here are the steps:
 7. Select Default under Configure version/alias.
 8. Click on Configure details on the bottom right corner to create your rule. 
 
-Now, create another cloud watch rule for s3 bucket. Follow the steps below (some steps are the same as the steps for rds).
+Now, create another cloudwatch rule for s3 bucket. Follow the steps below (some steps are the same as the steps for rds).
 
 1. Same as above.
 2. Choose s3 for service name and AWS API Call via CloudTrail for event type.
@@ -268,7 +265,9 @@ Now that we have created the CloudWatch Rules, what do we do next?
 
 Let's start with the IAM role. Here's what you have to do.
 
-Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, as shown below.
+Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action. 
+
+To make your work easier, delete what was in the json previously and just copy and paste the following json. 
 ```json
 {
     "Version": "2012-10-17",
@@ -306,6 +305,8 @@ Create a new IAM Role with "rds:AddTagsToResource", "rds:Describe*" in Action, a
 Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
 
 To save you time, copy and paste the following lambda code to your lamda function. Remember to enter your own accountID, access key id, and secret access key in the code.
+
+**WARNING: DELETE your account ID, access key id, and secret access key BEFORE you UPLOAD this code to the INTERNET!**
 
 ```python
 from __future__ import print_function
@@ -486,6 +487,8 @@ Wait! You're not done yet. Before you leave this page, go to SNS to create a top
 
 The final step is to add all of the users in the account to the IAM group created by the template. It is called something like, Autotag-ManageEC2InstancesGroup. If you want autotagging to work in another region, you have to set up autotagging in that region by following the same steps as shown above.
 
+If you want to see how the lambda code is working in cloudwatch, you can go to CloudWatch and click on Logs to see the latest lambda function execution. Each of of the function executions shows what happens when each method in the function is executed.
+
 Congrats! You have now completed the Autotagging tutorial. 
 
 Summary of what we have just done:
@@ -515,7 +518,7 @@ You can use AWS config to quickly find all the users who are not tagging their r
 
 Since I have introduced two ways to detect improperly tagged resources in this tutorial, I would like to help you distinguish between the two, so you know which solution works best for you and how to manage the cost of the option that you choose. 
 
-NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets>
+NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets.
 
 ## Pros and Cons AWS Autotagging and AWS Config Rule: Required tags
 
@@ -532,9 +535,9 @@ NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instanc
 |Setting up the required tags config rule is very easy.          |                                     |
 |You can send SNS email alerts.                                  |                                     |
 
-The biggest difference between AWS Config rule Required Tags and Autotagging that we most care about is the fact that you cannot autotag with Required Tags. Autotagging is only possible when you write lambda code.
+The biggest difference between AWS Config rule Required Tags and Autotagging that we care most about is the fact that you cannot autotag with Required Tags. Autotagging can only be done with lambda code.
 
-Although functionality is an important factor of consideration, we must not forget another important factor, cost.
+Although functionality is an important factor for consideration, we must not forget another important factor, cost.
 
 Let's compare the cost of using Required Tags and the Autotagging Lambda function.
 
@@ -547,16 +550,16 @@ Pricing information for CloudFormation, CloudTrail, CloudWatch, SNS and Lambda
 "There is no additional charge for AWS CloudFormation." - https://aws.amazon.com/cloudformation/pricing/
 
 ### CloudWatch 
-##### Amazon CloudWatch Logs*
+##### Amazon CloudWatch Logs
 
-$0.50 per GB ingested**
+* $0.50 per GB ingested
 
-$0.03 per GB archived per month***
+* $0.03 per GB archived per month
 
 Data Transfer OUT from CloudWatch Logs is priced equivalent to the “Data Transfer OUT from Amazon EC2 To” and “Data Transfer OUT from Amazon EC2 to Internet” tables on the EC2 Pricing Page.
 
-##### Amazon CloudWatch Events - Custom Events****
-$1.00 per million custom events generated*****
+##### Amazon CloudWatch Events - Custom Events
+* $1.00 per million custom events generated
 - https://aws.amazon.com/cloudwatch/pricing/
 
 ### CloudTrail
@@ -589,7 +592,7 @@ You can find Duration and Memory Size at the bottom your Autotag CloudWatch log.
 REPORT RequestId: 0a28cd44-9475-11e7-a8f8-11f3df1b4e23	Duration: 871.20 ms	Billed Duration: 900 ms Memory Size: 128 MB	Max Memory Used: 54 MB	
 ***
 
-#### How to calculate Lambda costs
+### How to calculate Lambda costs
 
 Example:
 
@@ -597,7 +600,7 @@ Your lambda function has 128 MB of allocated memory. It is executed 20 million t
 
 The following information is obtained from AWS Lambda Pricing - https://aws.amazon.com/lambda/pricing/
 
-### Monthly compute charges
+##### Monthly compute charges
 
 The monthly compute price is $0.00001667 per GB-s and the free tier provides 400,000 GB-s.
 
@@ -611,7 +614,7 @@ Total Compute – Free tier compute = Monthly billable compute seconds
 
 Monthly compute charges = 1,600,000 * $0.00001667 = $26.672 
 
-### Monthly request charges
+##### Monthly request charges
 
 The monthly request price is $0.20 per 1 million requests and the free tier provides 1M requests per month.
 
@@ -621,13 +624,13 @@ Total requests – Free tier request = Monthly billable requests
 
 Monthly request charges = 19M * $0.2/M = $3.80 
 
-### Total compute charges
+##### Total compute charges
 
 Total charges = Compute charges + Request charges = $26.672 + $3.80 = $30.472 per month
 
 $30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday. The actual cost is actually much lower when both the compute time per month and the number of executions in each month are within the free tier range. Furthermore, the cost estimation for the other AWS services are overestimated as well to show you how costly it can be when the services are working in concert.
 
-### Example Cost breakdown:
+### Example Cost breakdown of Autotagging:
 
 Charges for CloudFormation = $0 
 
@@ -647,7 +650,7 @@ Charges for lambda function with 128 MB allocated memory, 20 million executions 
 
 Total = $6.26 + $30.472/month 
 
-## AWS Config Rule:
+## AWS Config Rule Costs:
 
 The following information is obtained from AWS. - https://aws.amazon.com/config/pricing/
 
@@ -661,12 +664,15 @@ For every active rule, your account receives at no extra charge for that month: 
 Unused evaluations do not accumulate.
 If you need more evaluations for your rules, additional evaluations will be charged at: $0.10 per thousand evaluations
 
-Example:
+### Example:
 
 10 Configuration items ONE-TIME FEE = $0.003 * 10 = $0.03
 3 Config Rules = $2 * 3 = $6.00
 
 Total = $0.03 + $6.00/per month
+
+## Summary of the costs AWS Autotagging:
+According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month." As we have demonstrated in the example calculation of the costs of Autotagging, the costs only become high when you have over 1M requests per month. 
 
 ## Conclusion
 These cost estimations are merely for showing you how to calculate the costs for each option, not for convincing you to choose one over the other. Just as a reminder, AWS Config cannot automatically tag untagged resources! I hope you enjoyed reading about the pros and cons as well as how to calculate the costs of using AWS Autotagging and AWS Config.
