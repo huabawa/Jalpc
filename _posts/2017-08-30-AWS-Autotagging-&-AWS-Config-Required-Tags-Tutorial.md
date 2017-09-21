@@ -2,6 +2,10 @@
 
 In this tutorial, I will show you how to set up AWS Autotagging for EC2, RDS, and S3. I will also show you how to set up Config Rule: Required tags, which does not autotag resources, but does detect improperly tagged resources.
 
+In short, Autotagging is Lambda function plus other AWS technologies. Config Rule is the Config service plus other technologies that can only check tag compliance; it does not do autotagging.
+
+Both of these solutions are described in this tutorial, including their tradeoffs and costs involved.
+
 In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. You should also learn why Auotagging is important to understand the whole purpose of setting up Autotagging.
 
 Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
@@ -22,7 +26,7 @@ But before that, let's first understand why we are using boto3.
 
 ### What is Boto3?
 
-Like the boto3 documentation says, Boto3 is the Amazon Web Services (AWS) SDK for Python. This means you can write your own python software for all kinds of AWS resources (eg. EC2 and S3). Isn't that amazing? The user doesn't have to open the AWS console at all to open the s3 bucket!
+Like the boto3 documentation says, Boto3 is the Amazon Web Services (AWS) SDK for Python. In other words, Boto3 is a Python library for manipulating AWS resources and services. This means you can write your own python software for all kinds of AWS resources (eg. EC2 and S3). Isn't that amazing? The user doesn't have to open the AWS console at all to open the s3 bucket!
 
 ### How to Install Boto3.
 
