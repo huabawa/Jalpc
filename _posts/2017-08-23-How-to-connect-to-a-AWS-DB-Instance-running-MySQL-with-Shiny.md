@@ -325,6 +325,38 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
+## AWS Authentication
+
+Key Pair
+When you lauch an EC2 instance, you are required to have a key pair. You can either use an existing key pair or create a new key pair. The purpose of the key pair is to encrypt and decrypt data or login inforamtion. If you want to connect to your instance via SSH, you would need this key pair. So, please keep your key pair in a safe place on your computer. 
+
+IAM User
+All IAM users have the same account ID. Therefore, you need to add all of these IAM users to the Autotag IAM group to autotag all of the resources that they launch.
+
+IAM Role
+IAM Role gives the lambda function permission to access certain resources or services. 
+
+Access Key ID and Secret Access Key
+When you are given an IAM user account, you received IAM user credentials. This incldued an access key ID and Secret Access Key. These are important when you want to use boto3 to programmatically access s3 buckets, SNS, ec2, rds, etc. 
+
+Your security credentials can also be in the command line with AWS CLI where you enter your Access Key ID and Secret Access Key to store them in AWS configure on your computer.
+
+For more information on understanding and how to get security credentials, visit this link http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys.
+
+What is Shiny?
+Shiny is dynamic web pages built on R.
+
+In this tutorial, I will be showing you how to connect an RDS MySQL instance to Rstudio to display your data in a shiny webpage. I will also be showing you how to display your S3 bucket CSV file in Shiny. 
+
+Boto3 is a Python library for manipulating S3
+
+Please note that Autotag/Config is shorthand for the following:
+
+Autotag is Lambda plus other AWS tech but *not* Config and it creates tags on resources automatically; Jocelyn's big win.
+
+Config is the Config service (plus maybe other tech) that can only do tag compliance; it does not do autotagging. 
+
+Both of these are described in a tutorial fashion and the tradeoffs are also discussed, including costs involved for both. 
 Jocelyn to write up Authentication in two ways
   - How forms of auth apply (Key pairs, IAM User creds, etc)
   - WARNINGS to people following her tutorials to keep them out of trouble
