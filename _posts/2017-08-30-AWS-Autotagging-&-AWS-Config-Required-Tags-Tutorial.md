@@ -15,39 +15,27 @@ Let's go through how AWS Authentication works and what each of the following ter
 ## AWS Authentication
 
 **Key Pair**
+
 When you launch an EC2 instance, you are required to have a key pair. You can either use an existing key pair or create a new key pair. The purpose of the key pair is to encrypt and decrypt data or login inforamtion. If you want to connect to your instance via SSH, you would need this key pair. So, please keep your key pair in a safe place on your computer. 
 
 **IAM User**
+
 All IAM users have the same account ID. Therefore, as an example, you need to add all of these IAM users to the Autotag IAM group to autotag all of the resources that they launch.
 
 **IAM Role**
+
 IAM Role gives certain services, ike Autotagging lambda function, permission to access certain resources or services. 
 
 **Access Key ID and Secret Access Key**
+
 When you are given an IAM user account, you received IAM user credentials. This included an access key ID and Secret Access Key. These are important when you want to use boto3 to programmatically access s3 buckets, SNS, ec2, rds, etc. 
 
-Your security credentials can also be used in the command line with AWS CLI where you enter your Access Key ID and Secret Access Key to store them in AWS configuration settings on your computer.
+Your security credentials can also be used in the command line with AWS CLI when you enter your Access Key ID and Secret Access Key to store them in AWS configuration settings on your computer.
 
 For more information on understanding and how to get security credentials, visit this link http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys.
 
 ## Back to our FIRST topic: Autotagging
-In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging lambda function, you should learn Boto3 and SNS because it will make things much easier. You should also learn why Auotagging is important to understand the whole purpose of setting up Autotagging.
-
-Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
-
-## How to parse the AWS detailed billing report located in S3 with Boto3
-
-If you have an AWS linked account and you get errors, like Access Denied, when you want to get access to cost and usage reports, what should you do?
-
-Luckily, there's a solution.
-
-AWS stores and updates detailed billing reports in your S3 bucket, which you (the user) can access, so you might be wondering, how can I access it using command prompt or terminal?
-
-### Accessing S3 bucket with Boto3
-
-Here is a link to the latest boto3 documentation. https://boto3.readthedocs.io/en/latest/.
-I recommend looking at the S3 bucket examples. https://boto3.readthedocs.io/en/latest/guide/s3-examples.html
-But before that, let's first understand why we are using boto3.
+In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging Lambda function, you should learn Boto3 and SNS because it will make things much easier. You should also learn why Auotagging is important to understand the whole purpose of setting up Autotagging.
 
 ### What is Boto3?
 
@@ -55,7 +43,7 @@ Like the boto3 documentation says, Boto3 is the Amazon Web Services (AWS) SDK fo
 
 ### How to Install Boto3.
 
-Trust me it's simple. Just follow the steps below to set up Boto3 on your computer.
+Follow the steps below to set up Boto3 on your computer.
 
 1. Install pip if you don't have pip installed already. Update pip to make sure it is the latest version.
 Link to pip installation documentation: https://pip.pypa.io/en/stable/installing/
@@ -66,17 +54,31 @@ Congrats! You have successfully installed boto3. The next step will be to write 
 
 ### Setting up AWS CLI
 **You need to set up AWS CLI in order to access your AWS resources**
+
 When you have installed AWS CLI, check that you have successfully installed it by typing, aws --version, in your terminal.
 Something like this, aws-cli/1.11.136 Python/2.7.13 Darwin/15.6.0 botocore/1.6.3, should appear.
 Then, type into the terminal, aws configure, to configure AWS CLI. Below is what should show on your terminal screen.
-**Configure your AWS CLI to enter your following information.
+```
+Configure your AWS CLI to enter your following information.
 AWS Access Key ID [None]: 
-AWS Secret Access Key [None]: 
+AWS Secret Access Key [None]:
 Default region name [None]: 
 Default output format [None]:  
-**
+```
 
 For more information, go to http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+
+Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
+
+## How to parse the AWS detailed billing report located in S3 with Boto3
+
+If you have an AWS linked account and you get errors, like Access Denied, when you want to get access to cost and usage reports, what should you do?
+
+Luckily, there's a solution.
+
+AWS stores and updates detailed billing reports in your S3 bucket, which you (the user) can access, so you may be wondering, how can I access it using command prompt or terminal?
+
+The following sections show you how you could use S3 bucket with Boto3.
 
 ### How to print out the S3 bucket list
 
@@ -226,6 +228,7 @@ Since each user could be running more than one instance at a time, we want the u
 **The End_date is the end date of the project.
 
 Another way to track cost by tags is to read the csv file that is saved twice a day to the S3 bucket, named AccountNumber-dlt-utilization. 
+
 These files are zip files, so you will need to unzip them first. If you want to receive daily or weekly summaries of the costs, you can write some lambda code to parse the csv, add up the costs, and create an SNS mailing list to email all of the account users what the weekly spendings are. 
 To do this, follow this link here. 
 
@@ -706,7 +709,7 @@ According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free
 ## Conclusion
 These cost estimations are merely for showing you how to calculate the costs for each option, not for convincing you to choose one over the other. Just as a reminder, AWS Config cannot automatically tag untagged resources! I hope you enjoyed reading about the pros and cons as well as how to calculate the costs of using AWS Autotagging and AWS Config.
 
-#### Glossary
+## Glossary
 
 ##### CloudWatch: 
 An AWS service that deploys templates (like packages) that configure resources for you. 
@@ -724,6 +727,10 @@ AWS CloudTrail is an AWS service that helps you enable governance, compliance, a
 http://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html
 An AWS services that provides you with a detailed view of the configuration of AWS resources in your AWS account. This includes how the resources are related to one another and how they were configured in the past so that you can see how the configurations and relationships change over time.
 
+## Useful Links:
+
+Here is a link to the latest boto3 documentation. https://boto3.readthedocs.io/en/latest/.
+I recommend looking at the S3 bucket examples after reading this tutorial. https://boto3.readthedocs.io/en/latest/guide/s3-examples.html
 
 
 
