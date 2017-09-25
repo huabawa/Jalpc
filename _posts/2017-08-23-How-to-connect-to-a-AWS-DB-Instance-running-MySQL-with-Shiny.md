@@ -3,6 +3,7 @@
 In this tutorial, I will be showing you how to connect an RDS MySQL instance to Rstudio and display your data in a shiny webpage. I will also be showing you how to display your S3 bucket CSV data in Shiny. 
 
 **What is Shiny?**
+
 Shiny is dynamic web pages built on R.
 
 Before you start this tutorial, make sure that you have MySQL community version installed. If you have not installed it, please go this link, https://www.mysql.com/products/community/, to install it. If you don't have any experience in MySQL or R, this is right tutorial for you, but if you do, that's great! When I started writing this tutorial, I had absolutely no experience in MySQL and R, so if I can understand R and MySQL, so can you.
