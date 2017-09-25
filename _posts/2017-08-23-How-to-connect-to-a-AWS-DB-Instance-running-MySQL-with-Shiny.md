@@ -1,14 +1,17 @@
 # Connecting to AWS DB instance running MySQL with Shiny
 
-In this tutorial, I will be showing you how to connect an RDS MySQL instance to Rstudio and display your data in a Shiny webpage. I will also be showing you how to display your S3 bucket CSV data in Shiny. 
+In this tutorial, I will be showing you how to connect an RDS MySQL instance to Rstudio and display your data on a Shiny webpage. I will also be showing you how to display your S3 bucket CSV data on a Shiny webpage, how to display data on an online Shiny dashboard, and how to create a timeseries graph with Shiny. Before we get into R programming, you need to understand the basics of MySQL and, most importantly, know what Shiny is. 
 
 **What is Shiny?**
 
 Shiny is dynamic web pages built on R.
 
-Before you start this tutorial, make sure that you have MySQL community version installed. If you have not installed it, please go to this link, https://www.mysql.com/products/community/, to install it. If you don't have any experience in MySQL or R, this is the right tutorial for you, but if you do, that's great! When I started writing this tutorial, I had absolutely no experience in MySQL and R, so if I can understand MySQL and R, so can you.
+Before you start this tutorial, make sure that you have MySQL community version installed. If you have not installed it, please go to this link, https://www.mysql.com/products/community/, to install it. If you don't have any experience in MySQL or R, this is the right tutorial for you, but if you do, that's great! When I started writing this tutorial, I had absolutely no experience in MySQL and R, so if I can understand MySQL and R, so can you. 
 
-After you have installed MySQL community version, follow these steps.
+You should also install RStudio from here, https://www.rstudio.com/products/rstudio/download/.
+Download and install this free version, RStudio Desktop Open Source License.
+
+After you have installed the MySQL community version and RStudio, follow these steps to access your RDS MySQL.
 
 **Here are the steps:**
 
@@ -36,7 +39,7 @@ Example: GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
 4. Type the following with the new user: ```./mysql -h <endpoint> -P <port> -u <user> -p```
 5. Type the following to check that the database granted to the user is created: ```SHOW databases;```
 
-## Show mysql tables in a webpage with Shiny
+## Introduction to Showing MySQL tables in a Shiny webpage
 https://shiny.rstudio.com/articles/persistent-data-storage.html
 
 I got the idea of displaying mysql tables with Shiny when my colleague mentioned that this was possible during our discussion with our boss on how to show energy data from the UW in mysql on a webpage. Having had no experience with mysql or shiny before, I thought the simplest and fastest way to begin learning these two things was to get help from my handy-dandy friend, Google. I simply typed in Shiny mysql into the google search bar and the first thing that showed up, Shiny - Persistent data storage in Shiny apps, was exactly the information that I needed. 
@@ -53,6 +56,9 @@ https://github.com/daattali/shiny-server/tree/master/persistent-data-storage
 In order to use the github source code, you need to enter your own host, port, user, and password in storage.R.
 *Note: The following code is obtained from https://shiny.rstudio.com/articles/persistent-data-storage.html#mysql*
 **WARNING: The host, port, user, and password in the code SHOULD BE DELETED when you upload this code to github or anywhere else online**
+
+1. Make a copy of the github folder persistent-data-storage on your computer.
+2. Delete everything in storage.R. Copy and paste the following code into storage.R.
 
 ```R
 library(RMySQL)
@@ -96,12 +102,16 @@ loadData <- function() {
   data
 }
 ```
-When you're done, you should be able to see the MySQL table that you created.
+3. When you run ui.R, you should be able to see the MySQL table on the demo Shiny webpage.
 
-## How to display S3 bucket csv file data on a Shiny webpage 
+## How to display S3 bucket CSV file data on a Shiny webpage 
 **WARNING: DO NOT upload this code to github or anywhere else online WITH YOUR AWS ACCESS KEY ID and AWS SECRET ACCESS KEY**
-**!!! This part of the code is for storage.R in the github demo site. But, you could use it in your github webpage, if you'd like.**
+**!!! This part of the code is for storage.R in the github demo source code. But, you could use it in your github webpage, if you'd like.**
 *Note: The following code is obtained from https://shiny.rstudio.com/articles/persistent-data-storage.html#mysql*
+
+1. Do the same thing as the instructions in the last section for MySQL
+
+2. Do the same thing as the instructions in the last section for MySQL, except, copy and paste the following code into storage.R.
 
 ```R
 
@@ -144,6 +154,7 @@ loadData <- function() {
   data  
 }
 ```
+3. Run ui.R.
 
 ## How to display a MySQL data timeseries graph on a Shiny webpage
 **WARNING: The host, port, user, and password in the code SHOULD BE DELETED when you upload this code to github or anywhere else online**
