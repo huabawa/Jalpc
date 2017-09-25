@@ -93,14 +93,14 @@ Voila!! The Catarse website opens up.
 
 For a video about how to do this, click on this youtube link. https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s
 
-If you interested in how to set up the payment gateway, you could use paypal or any other payment gateway. Catarse offers their own payment gateways. If you're interested in finding out more about payment gateways, please vist their github page https://github.com/catarse/catarse.  
+If you are interested in how to set up the payment gateway, you could use paypal or any other payment gateway. Catarse offers their own payment gateways. If you're interested in finding out more about payment gateways, please vist their github page https://github.com/catarse/catarse.  
 
 ## Common Issues:
 
 If this shows up in Terminal when you try to run bower install,
 ```Prefix the choice with ! to persist it to bower.json.```
 , you can type ```!2```.
-You can find the solution here as well. https://jaketrent.com/post/bower-resolutions/
+You can find this solution here as well. https://jaketrent.com/post/bower-resolutions/
 
 If ```bower init``` does not work, delete the ```bower_components``` folder in catarse and run bower init again.
 
