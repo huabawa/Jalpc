@@ -721,7 +721,7 @@ If you need more evaluations for your rules, additional evaluations will be char
 Total = $0.03 + $6.00/per month
 
 ## Conclusion
-These cost estimations are merely for showing you how to calculate the costs for each option, not for convincing you to choose one over the other. Just as a reminder, AWS Config cannot automatically tag untagged resources! I hope you enjoyed reading about the pros and cons as well as how to calculate the costs of using AWS Autotagging and AWS Config.
+These cost estimations are merely for showing you how to calculate the costs for each option, not for convincing you to choose one over the other. Just as a reminder, AWS Config cannot automatically tag untagged resources! I hope you enjoyed reading about the pros and cons as well as how to calculate the costs of AWS Autotagging and AWS Config.
 
 ## Glossary
 
