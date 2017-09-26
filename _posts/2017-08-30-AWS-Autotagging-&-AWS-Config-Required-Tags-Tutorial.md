@@ -336,7 +336,13 @@ To make your work easier, delete what was in the json previously and just copy a
 
 Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
 
-To save you time, copy and paste the following lambda code to your lamda function. Remember to enter your own accountID, access key id, and secret access key in the code.
+To save you time, copy and paste the following lambda code to your lamda function. 
+
+**Remember to enter your own accountID, access key id, secret access key and SNS arn in the code.**
+
+**Each IAM user account has an account ID, access key id and secret access key. You do not need to change these in the code when you set up Autotagging in a different region.**
+
+**You can use the same SNS arn for all of the regions in which you set up Autotagging. For example, if you create a SNS topic in North Virginia and set up Autotagging in a different region, Oregon, you can still use the same SNS arn.**
 
 **WARNING: DELETE your account ID, access key id, and secret access key BEFORE you UPLOAD this code to the INTERNET!**
 
@@ -352,8 +358,6 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
-    #logger.info('Event: ' + str(event))
-    #print('Received event: ' + json.dumps(event, indent=2))
 
     ids = []
     idc = ''
@@ -366,7 +370,7 @@ def lambda_handler(event, context):
         arn = detail['userIdentity']['arn']
         principal = detail['userIdentity']['principalId']
         userType = detail['userIdentity']['type']
-        accountID = 'change to your own accountID' # Change to your own accountID
+        accountID = 'change to your own accountID' # Enter your own account ID
         
         if userType == 'IAMUser':
             user = detail['userIdentity']['userName']
@@ -382,7 +386,6 @@ def lambda_handler(event, context):
 
         ec2 = boto3.resource('ec2')
         rds = boto3.client('rds')
-        # s3 = boto3.resource('s3')
         client = boto3.client('s3')
 
         if eventname == 'CreateVolume':
@@ -441,12 +444,11 @@ def lambda_handler(event, context):
             
             print(tags)
             print(ids)
-            # for index, item in enumerate(my_list):
             for index, tag in enumerate(tags['Tags']):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
                     print ('SNS ready')
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
-                    response = sns.publish(
+                    response = sns.publish( # add your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:0000000000:Autotag',
                         Message= user + '(' + principal + ') did not include Name, Project and End_date tags tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
                         Subject='AutoTag Alert'
@@ -460,7 +462,7 @@ def lambda_handler(event, context):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
                     print ('SNS ready')
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
-                    response = sns.publish(
+                    response = sns.publish( # add your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:0000000000000:Autotag',
                         Message= user + '(' + principal + ') did not include Name, Project and End_date tags in ' + idc + '. Please add these tags asap. Thanks!',
                         Subject='AutoTag Alert'
@@ -492,7 +494,7 @@ def lambda_handler(event, context):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
                     print ('SNS ready')
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
-                    response = sns.publish(
+                    response = sns.publish( # add your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:00000000000000:Autotag',
                         Message= user + '(' + principal + ') did not include Name, Project and End_date tags in ' + ide + '. Please add these tags asap. Thanks!',
                         Subject='AutoTag Alert'
@@ -505,6 +507,9 @@ def lambda_handler(event, context):
         logger.error('Something went wrong: ' + str(e))
         return False
 ```
+
+**You can use the same SNS arn for all of the regions in which you set up Autotagging. For example, if you create a SNS topic in North Virginia and set up Autotagging in a different region, Oregon, you can still use the same SNS arn.**
+
 Wait! You're not done yet. Before you leave this page, go to SNS to create a topic and subscribe to it. Here are the steps.
 
 1. Go to SNS.
@@ -517,13 +522,21 @@ Wait! You're not done yet. Before you leave this page, go to SNS to create a top
 8. Select Email for Protocol. Type in your email and click Create subscription.
 9. You will receive a subscription confirmation in a few minutes. Confirm it and then paste the topic arn into your lambda function.
 
-The final step is to add all of the users in the account to the IAM group created by the template. It is called something like, Autotag-ManageEC2InstancesGroup. If you want autotagging to work in another region, you have to set up autotagging in that region by following the same steps as shown above.
+The final step is to add all of the users in the account to the IAM group created by the template. It is called something like, Autotag-ManageEC2InstancesGroup. **If you want autotagging to work in another region, you have to set up autotagging in that region by following the same steps as shown above. EXCEPT, you DO NOT need to recreate an SNS topic or REENTER the account ID, access key id, and secret access.**
 
-If you want to see how the lambda code is working in cloudwatch, you can go to CloudWatch and click on Logs to see the latest lambda function execution. Each of of the function executions shows what happens when each method in the function is executed.
+**Now, let me tell you a story that involves me debugging the code.**
+
+## CloudWatch Logs
+
+While I was debugging my code, I noticed that the Lambda function shows all of the execution history in Logs in CloudWatch. Whenever the Autotagging Lambda function is triggered, CloudWatch Logs records the output of the execution via logger.info in the Lambda function. This means that you can type something like, print('SNS ready'), to appear in CloudWatch Logs to know if your code actually executes the SNS. By doing so, I was able to find out why I kept receiving SNS email alerts constantly when I didn't tag my resources at all. It turned out there were many preset tags in the cloudczar account that are visible in CloudWatch Logs, but not in the launched resource; therefore, the SNS method kept running. 
+
+**To prevent ANY method from running too many times, add a break,** which is what I did in the SNS method for loop.
+
+If you want to view Logs, go to CloudWatch and click on Logs on the left-hand side to see the latest lambda function execution. Each of of the log files show what happens when each method in the function is executed.
 
 Congrats! You have now completed the Autotagging tutorial. 
 
-Summary of what we have just done:
+#### Summary of what we have just done:
 
 We created an autotagging service that automatically tags resources with the owner and principal ID and automatically sends you an email when it detects improperly tagged resources. Isn't that great?
 
@@ -544,7 +557,6 @@ You can use AWS config to quickly find all the users who are not tagging their r
 7. When the stack, required-tags-stack, has been created, go to the AWS config dashboard.
 8. On the left side, you will see Rules. Click on it.
 9. Click on rule name, required-tags. Here, you will see all the noncompliant EC2, RDS, and S3 buckets.
-
 
 # AWS Autotagging vs. AWS Config Rule: Required tags
 
