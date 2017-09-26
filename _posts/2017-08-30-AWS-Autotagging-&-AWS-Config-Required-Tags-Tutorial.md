@@ -566,7 +566,7 @@ NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instanc
 
 ## Summary of AWS Autotagging and AWS Config Rule costs:
 
-According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month." As we will demonstrate in the example calculation of the costs of Autotagging, the costs only become high when you have over 1M requests per month. The AWS Config Rule costs approximately $6/month. If you would like to know the cost breakdown, please read the rest of this tutorial.
+According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month." As we will demonstrate in the example calculation of the costs of Autotagging, the costs only become high when you have over 1M requests per month. One AWS Config Rule costs approximately $2/month. If you would like to know the cost breakdown, please read the rest of this tutorial.
 
 ## Pros and Cons AWS Autotagging and AWS Config Rule: Required tags
 
@@ -715,6 +715,7 @@ If you need more evaluations for your rules, additional evaluations will be char
 ### Example:
 
 10 Configuration items ONE-TIME FEE = $0.003 * 10 = $0.03
+
 3 Config Rules = $2 * 3 = $6.00
 
 Total = $0.03 + $6.00/per month
