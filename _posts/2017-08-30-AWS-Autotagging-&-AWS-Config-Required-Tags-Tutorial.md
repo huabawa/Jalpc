@@ -10,7 +10,7 @@ Table of Contents:
 - [Setting up SNS for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#sns-for-autotagging)
 - [CloudWatch Logs for Debugging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#cloudwatch-logs)
 - [Setting up AWS Required tags](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#next-topic-aws-config-required-tags-tutorial)
-- [Autoagging vs. Required Tags Tradeoffs](
+- [Autoagging vs. Required Tags Tradeoffs](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#aws-autotagging-vs-aws-config-rule-required-tags)
 - [Autotagging Cost Breakdown Example](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#example-cost-breakdown-of-autotagging)
 - [AWS Required tags Costs](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#aws-config-rule-costs)
 
