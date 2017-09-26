@@ -14,7 +14,7 @@ Table of Contents:
 
 [Setting up Autotagging](#place-2)
 
-[https://github.com/huabawa/Jalpc/edit/master/_posts/2017-08-30-AWS-Autotagging-&-AWS-Config-Required-Tags-Tutorial.md] (#Example Cost breakdown of Autotagging)
+[Autotagging Cost Breakdown](#Example Cost breakdown of Autotagging)
 
 [Introduction to Boto3](#place-2)
 [Introduction to SNS](#place-2)
