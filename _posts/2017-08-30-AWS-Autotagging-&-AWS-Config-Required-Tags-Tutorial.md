@@ -12,15 +12,18 @@ Both of these solutions are described in this tutorial, including their tradeoff
 
 Table of Contents:
 
-[Setting up Autotagging](#place-2)
+[AWS Authentification](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-&-AWS-Config-Required-Tags-Tutorial.md#aws-authentication)
+[Introduction to Boto3](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#back-to-our-first-topic-autotagging)
+[Introduction to SNS](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#how-to-set-up-ec2-sns-notifications)
+[Setting up Autotagging: CloudFormation](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#next-step-set-up-autagging)
+[CloudWatch Rules for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#create-two-cloudwatch-rules-one-for-s3-bucket-and-one-for-rds)
+[IAM Role for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#create-a-new-iam-role)
+[Autotagging Lambda function](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#autotagging-lambda-function)
+[Setting up SNS for Autotagging](
 
-[Autotagging Cost Breakdown](#https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-&-AWS-Config-Required-Tags-Tutorial.md#aws-authentication)
 
-[Introduction to Boto3](#place-2)
-[Introduction to SNS](#place-2)
 
-[IAM Role for Autotagging Lambda function](#place-2)
-[Autotagging Lambda function](#place-2)
+[Autotagging Cost Breakdown]
 
 Let's go through how AWS Authentication works and what each of the following terms mean. 
 
@@ -526,6 +529,8 @@ def lambda_handler(event, context):
 **You can use the same SNS arn for all of the regions in which you set up Autotagging. For example, if you create a SNS topic in North Virginia and set up Autotagging in a different region, Oregon, you can still use the same SNS arn.**
 
 Wait! You're not done yet. Before you leave this page, go to SNS to create a topic and subscribe to it. Here are the steps.
+
+#### SNS for Autotagging
 
 1. Go to SNS.
 2. Click on Create Topic in the SNS Dashboard.
