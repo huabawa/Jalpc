@@ -448,7 +448,7 @@ def lambda_handler(event, context):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
                     print ('SNS ready') # if SNS method is executed, print 'SNS ready'. 
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
-                    response = sns.publish( # add your own access key id, secret access key and SNS arn
+                    response = sns.publish( # Enter your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:0000000000:Autotag',
                         Message= user + '(' + principal + ') did not include Name, Project and End_date tags tags in ' + ','.join(ids) + '. Please add these tags asap. Thanks!',
                         Subject='AutoTag Alert'
@@ -462,7 +462,7 @@ def lambda_handler(event, context):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
                     print ('SNS ready')
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
-                    response = sns.publish( # add your own access key id, secret access key and SNS arn
+                    response = sns.publish( # Enter your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:0000000000000:Autotag',
                         Message= user + '(' + principal + ') did not include Name, Project and End_date tags in ' + idc + '. Please add these tags asap. Thanks!',
                         Subject='AutoTag Alert'
@@ -494,7 +494,7 @@ def lambda_handler(event, context):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
                     print ('SNS ready')
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
-                    response = sns.publish( # add your own access key id, secret access key and SNS arn
+                    response = sns.publish( # Enter your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:00000000000000:Autotag',
                         Message= user + '(' + principal + ') did not include Name, Project and End_date tags in ' + ide + '. Please add these tags asap. Thanks!',
                         Subject='AutoTag Alert'
