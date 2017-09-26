@@ -595,9 +595,14 @@ Pricing information for CloudFormation, CloudTrail, CloudWatch, SNS and Lambda
 (All of this information is obtained from AWS)
 
 ### CloudFormation 
-"There is no additional charge for AWS CloudFormation." - https://aws.amazon.com/cloudformation/pricing/
+
+The following information is obtained from https://aws.amazon.com/cloudformation/pricing/.
+
+"There is no additional charge for AWS CloudFormation." 
 
 ### CloudWatch 
+The following information is obtained from https://aws.amazon.com/cloudwatch/pricing/.
+
 ##### Amazon CloudWatch Logs
 
 * $0.50 per GB ingested
@@ -607,24 +612,30 @@ Pricing information for CloudFormation, CloudTrail, CloudWatch, SNS and Lambda
 Data Transfer OUT from CloudWatch Logs is priced equivalent to the “Data Transfer OUT from Amazon EC2 To” and “Data Transfer OUT from Amazon EC2 to Internet” tables on the EC2 Pricing Page.
 
 ##### Amazon CloudWatch Events - Custom Events
+
 * $1.00 per million custom events generated
-- https://aws.amazon.com/cloudwatch/pricing/
 
 ### CloudTrail
+
+The following information is obtained from https://aws.amazon.com/cloudtrail/pricing/.
+
 There is no charge from AWS CloudTrail for creating a trail. By creating a CloudTrail trail, you can deliver two types of events to your Amazon S3 bucket.
 
 Management Events: Represent administrative type of account activity for AWS services. For example, CloudTrail delivers Management Events for API calls such as launching EC2 instances or creating S3 buckets. The first copy of Management Events within each region is delivered free of charge. Additional copies of Management Events are charged at $2.00 per 100,000 events.
 
 Data Events: Represent data or object level account activity for AWS resources. For example, CloudTrail delivers Data Events for S3 object level API such as Get, Put, Delete and List actions. Data Events are recorded only for the buckets you specify and are charged at $0.10 per 100,000 events.
-- https://aws.amazon.com/cloudtrail/pricing/
 
 ### SNS
+
+The following information is obtained from https://aws.amazon.com/sns/pricing/.
+
 |Endpoint Type     |Free Tier     |Price             |
 |--:               |--:           |--:               |
 |email/email-JSON  |1,000	        |$2.00 per 100,000 |
-- https://aws.amazon.com/sns/pricing/
 
 ### Lambda Pricing Details
+The following information is obtained from AWS Lambda Pricing, https://aws.amazon.com/lambda/pricing/.
+
 The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month.
 ##### Requests
 You are charged for the total number of requests across all your functions. Lambda counts a request each time it starts executing in response to an event notification or invoke call, including test invokes from the console.
@@ -645,8 +656,6 @@ REPORT RequestId: 0a28cd44-9475-11e7-a8f8-11f3df1b4e23	Duration: 871.20 ms	Bille
 Example:
 
 Your lambda function has 128 MB of allocated memory. It is executed 20 million times per month and runs for 800 ms each time it is executed. What would you be charged?
-
-The following information is obtained from AWS Lambda Pricing - https://aws.amazon.com/lambda/pricing/
 
 ##### Monthly compute charges
 
@@ -700,7 +709,7 @@ Total = $6.26 + $30.472/month
 
 ## AWS Config Rule Costs:
 
-The following information is obtained from AWS. - https://aws.amazon.com/config/pricing/
+The following information is obtained from AWS, https://aws.amazon.com/config/pricing/.
 
 With AWS Config, you are charged a one-time fee based on the number of Configuration Items recorded. 
 $0.003 per Configuration Item recorded
