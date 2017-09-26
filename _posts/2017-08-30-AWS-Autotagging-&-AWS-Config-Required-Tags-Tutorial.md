@@ -379,7 +379,7 @@ def lambda_handler(event, context):
             user = principal.split(':')[1]
 
 
-        logger.info('principalId: ' + str(principal))
+        logger.info('principalId: ' + str(principal)) # logger.info means this will appear in CloudWatch Logs
         logger.info('region: ' + str(region))
         logger.info('eventName: ' + str(eventname))
         logger.info('detail: ' + str(detail))
@@ -388,11 +388,11 @@ def lambda_handler(event, context):
         rds = boto3.client('rds')
         client = boto3.client('s3')
 
-        if eventname == 'CreateVolume':
+        if eventname == 'CreateVolume': # the event is an API call that triggers the lambda function
             ids.append(detail['responseElements']['volumeId'])
             logger.info(ids)
 
-        elif eventname == 'RunInstances':
+        elif eventname == 'RunInstances': # the event is an API call that triggers the lambda function
             items = detail['responseElements']['instancesSet']['items']
             for item in items:
                 ids.append(item['instanceId'])
@@ -442,11 +442,11 @@ def lambda_handler(event, context):
             for instance in instances:
                 tags = ec2.meta.client.describe_tags(Filters=filterInstances(instances))
             
-            print(tags)
-            print(ids)
+            print(tags) # print the tags to what the resource is tagged with. Will appear in CloudWatch Logs
+            print(ids) # print the resource id
             for index, tag in enumerate(tags['Tags']):
                 if tag['Key'] != 'Project' or tag['Key'] != 'End_date' or tag['Key'] != 'Name':
-                    print ('SNS ready')
+                    print ('SNS ready') # if SNS method is executed, print 'SNS ready'. 
                     sns = boto3.client('sns', aws_access_key_id='AAAAAAAAAA', aws_secret_access_key='AAAAAAAAAAAAA')
                     response = sns.publish( # add your own access key id, secret access key and SNS arn
                         TopicArn='arn:aws:sns:us-west-2:0000000000:Autotag',
@@ -530,7 +530,7 @@ The final step is to add all of the users in the account to the IAM group create
 
 While I was debugging my code, I noticed that the Lambda function shows all of the execution history in Logs in CloudWatch. Whenever the Autotagging Lambda function is triggered, CloudWatch Logs records the output of the execution via logger.info in the Lambda function. This means that you can type something like, print('SNS ready'), to appear in CloudWatch Logs to know if your code actually executes the SNS. By doing so, I was able to find out why I kept receiving SNS email alerts constantly when I didn't tag my resources at all. It turned out there were many preset tags in the cloudczar account that are visible in CloudWatch Logs, but not in the launched resource; therefore, the SNS method kept running. 
 
-**To prevent ANY method from running too many times, add a break,** which is what I did in the SNS method for loop.
+**To prevent ANY loop from running constantly, add a break,** which is what I did in the SNS method for loop.
 
 If you want to view Logs, go to CloudWatch and click on Logs on the left-hand side to see the latest lambda function execution. Each of of the log files show what happens when each method in the function is executed.
 
