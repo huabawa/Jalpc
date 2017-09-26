@@ -564,6 +564,10 @@ Since I have introduced two ways to detect improperly tagged resources in this t
 
 NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instances, volumes, snapshots, and Amazon Machine Images (AMIs), as well as RDS instances and S3 buckets.
 
+## Summary of AWS Autotagging and AWS Config Rule costs:
+
+According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month." As we will demonstrate in the example calculation of the costs of Autotagging, the costs only become high when you have over 1M requests per month. The AWS Config Rule costs approximately $6/month. If you would like to know the cost breakdown, please read the rest of this tutorial.
+
 ## Pros and Cons AWS Autotagging and AWS Config Rule: Required tags
 
 |Pros                                                  |Cons      |
@@ -714,9 +718,6 @@ If you need more evaluations for your rules, additional evaluations will be char
 3 Config Rules = $2 * 3 = $6.00
 
 Total = $0.03 + $6.00/per month
-
-## Summary of the costs AWS Autotagging:
-According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month." As we have demonstrated in the example calculation of the costs of Autotagging, the costs only become high when you have over 1M requests per month. 
 
 ## Conclusion
 These cost estimations are merely for showing you how to calculate the costs for each option, not for convincing you to choose one over the other. Just as a reminder, AWS Config cannot automatically tag untagged resources! I hope you enjoyed reading about the pros and cons as well as how to calculate the costs of using AWS Autotagging and AWS Config.
