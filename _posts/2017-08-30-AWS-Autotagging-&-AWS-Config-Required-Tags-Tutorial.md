@@ -18,6 +18,7 @@ Table of Contents:
 
 [Introduction to Boto3](#place-2)
 [Introduction to SNS](#place-2)
+
 [IAM Role for Autotagging Lambda function](#place-2)
 [Autotagging Lambda function](#place-2)
 
