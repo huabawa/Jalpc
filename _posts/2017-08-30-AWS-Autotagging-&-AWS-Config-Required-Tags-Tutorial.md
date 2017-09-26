@@ -1,3 +1,21 @@
+Table of Contents:
+
+- [AWS Authentification](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-&-AWS-Config-Required-Tags-Tutorial.md#aws-authentication)
+- [Introduction to Boto3](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#back-to-our-first-topic-autotagging)
+- [Introduction to SNS](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#how-to-set-up-ec2-sns-notifications)
+- [Setting up Autotagging: CloudFormation](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#next-step-set-up-autagging)
+- [CloudWatch Rules for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#create-two-cloudwatch-rules-one-for-s3-bucket-and-one-for-rds)
+- [IAM Role for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#create-a-new-iam-role)
+- [Autotagging Lambda function](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#autotagging-lambda-function)
+- [Setting up SNS for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#sns-for-autotagging)
+- [CloudWatch Logs for Debugging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#cloudwatch-logs)
+- [Setting up AWS Required tags](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#next-topic-aws-config-required-tags-tutorial)
+- [Autoagging vs. Required Tags Tradeoffs](
+- [Autotagging Cost Breakdown Example](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#example-cost-breakdown-of-autotagging)
+- [AWS Required tags Costs](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#aws-config-rule-costs)
+
+
+
 # AWS Autottagging and AWS Config Rule: Required tags Tutorial
 
 In this tutorial, I will show you how to set up AWS Autotagging for EC2, RDS, and S3. I will also show you how to set up Config Rule: Required tags, which does not autotag resources, but does detect improperly tagged resources.
@@ -9,21 +27,6 @@ Both of these solutions are described in this tutorial, including their tradeoff
 **WARNING: DO NOT give anyone else your AWS Security Credentials** 
 
 **AWS Authentication is a very important topic that users often overlook. If you give other people your security credentials, your account may be accessed and you may one day receive a large bill.**
-
-Table of Contents:
-
-[AWS Authentification](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-&-AWS-Config-Required-Tags-Tutorial.md#aws-authentication)
-[Introduction to Boto3](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#back-to-our-first-topic-autotagging)
-[Introduction to SNS](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#how-to-set-up-ec2-sns-notifications)
-[Setting up Autotagging: CloudFormation](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#next-step-set-up-autagging)
-[CloudWatch Rules for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#create-two-cloudwatch-rules-one-for-s3-bucket-and-one-for-rds)
-[IAM Role for Autotagging](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#create-a-new-iam-role)
-[Autotagging Lambda function](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#autotagging-lambda-function)
-[Setting up SNS for Autotagging](
-
-
-
-[Autotagging Cost Breakdown]
 
 Let's go through how AWS Authentication works and what each of the following terms mean. 
 
@@ -588,7 +591,7 @@ NOTE: If you choose to use Autotagging, the autotagged resources are EC2 Instanc
 
 According to the AWS Lambda pricing page, "The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month." As we will demonstrate in the example calculation of the costs of Autotagging, the lambda function is essentially free when you are within the free tier range. On the other hand, one AWS Config Rule costs approximately $2/month. If you would like to know the cost breakdown, please read the rest of this tutorial.
 
-## Pros and Cons AWS Autotagging and AWS Config Rule: Required tags
+## AWS Autotagging vs. AWS Config Rule: Required tags
 
 |Pros                                                  |Cons      |
 |--:                                                   |--:                                                                  |
