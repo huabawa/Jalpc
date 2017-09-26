@@ -10,6 +10,17 @@ Both of these solutions are described in this tutorial, including their tradeoff
 
 **AWS Authentication is a very important topic that users often overlook. If you give other people your security credentials, your account may be accessed and you may one day receive a large bill.**
 
+Table of Contents:
+
+[Setting up Autotagging](#place-2)
+
+[https://github.com/huabawa/Jalpc/edit/master/_posts/2017-08-30-AWS-Autotagging-&-AWS-Config-Required-Tags-Tutorial.md] (#Example Cost breakdown of Autotagging)
+
+[Introduction to Boto3](#place-2)
+[Introduction to SNS](#place-2)
+[IAM Role for Autotagging Lambda function](#place-2)
+[Autotagging Lambda function](#place-2)
+
 Let's go through how AWS Authentication works and what each of the following terms mean. 
 
 ## AWS Authentication
@@ -32,7 +43,7 @@ When you are given an IAM user account, you received IAM user credentials. This 
 
 Your security credentials can also be used in the command line with AWS CLI when you enter your Access Key ID and Secret Access Key to store them in AWS configuration settings on your computer.
 
-For more information on understanding and how to get security credentials, visit this link http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys.
+For more information on understanding and how to get security credentials, visit this [link](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys).
 
 ## Back to our FIRST topic: Autotagging
 In order to set up Autotagging in AWS, you need to create a lambda function. Before you jump into Lambda to write your Autotagging Lambda function, you should learn Boto3 and SNS because it will make things much easier. You should also learn why Auotagging is important to understand the whole purpose of setting up Autotagging.
@@ -46,9 +57,9 @@ Like the boto3 documentation says, Boto3 is the Amazon Web Services (AWS) SDK fo
 Follow the steps below to set up Boto3 on your computer.
 
 1. Install pip if you don't have pip installed already. Update pip to make sure it is the latest version.
-Link to pip installation documentation: https://pip.pypa.io/en/stable/installing/
-2. Install AWS CLI. Link to AWS CLI installation guide: http://docs.aws.amazon.com/cli/latest/userguide/installing.html
-3. Install Boto3. Link to Boto3 Installation: http://boto3.readthedocs.io/en/latest/guide/quickstart.html
+Pip installation [documentation](http://pip.pypa.io/en/stable/installing/).
+2. Install AWS CLI. AWS CLI installation [guide](http://docs.aws.amazon.com/cli/latest/userguide/installing.html).
+3. Install Boto3. Boto3 [Installation](http://boto3.readthedocs.io/en/latest/guide/quickstart.html).
 
 Congrats! You have successfully installed boto3. The next step will be to write some python code to print out the S3 bucket list, list the contents of an S3 bucket, and more.
 
@@ -66,7 +77,7 @@ Default region name [None]:
 Default output format [None]:  
 ```
 
-For more information, go to http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+For more information, click [here](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
 Since it's easier to learn things by doing, let's assume that you have a detailed billing report in an S3 bucket that you need to parse with Boto3.
 
@@ -152,9 +163,9 @@ raw.loc[:,'LinkedAccountId':'SubscriptionId'] # display only columns 'LinkedAcco
 filtered = raw.loc[:,'LinkedAccountId':'SubscriptionId'] # save parsed detailed billing report
 filtered.to_csv('OUT_FILE.csv') # saves in the same directory
 ```
-More suggestions on how to parse the detailed billing report: http://blog.backslasher.net/aws-billing.html
+More suggestions on how to parse the detailed billing report [here](http://blog.backslasher.net/aws-billing.html).
 
-For more detailed instructions on selecting data, click this link. https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label
+More detailed instructions on selecting data [here](https://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-label).
 
 ### Copying an object from one s3 bucket to another s3 bucket
 
@@ -251,7 +262,7 @@ When EC2 Instances, Amazon Elastic Block Store (EBS) volumes, EBS snapshots or A
 
 Follow the steps below to autotag your EC2 Instance, Amazon Elastic Block Store (EBS) volumes, EBS snapshots and Amazon Machine Images (AMIs).
 
-1. Go to CloudFormation. You can either click [here](https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template) to download the template and upload it to S3 OR specify this Amazon S3 template URL https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template . You can click through with no effort, for example, you do not need to tag your stack. Deploy the cloudformation template in the region of your choosing to create an Autotag stack. 
+1. Go to CloudFormation. You can either click [here](https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template) to download the template and upload it to S3 OR specify this Amazon S3 template URL https://s3.amazonaws.com/awsiammedia/public/sample/autotagec2resources/AutoTag.template. You can click through with no effort, for example, you do not need to tag your stack. Deploy the cloudformation template in the region of your choosing to create an Autotag stack. 
 
     *Note: Make sure CloudTrail is enabled in this region because cloudwatch events will not work if it is not turned on.*
 
@@ -259,7 +270,7 @@ Follow the steps below to autotag your EC2 Instance, Amazon Elastic Block Store 
 
    *Note: You must add IAM users to the group manually. Also, if the added IAM user tries to stop an instance that someone else created, he or she will get an error message.*
 
-Here is an article about autotagging written by an AWS blogger. https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/
+[Here](https://aws.amazon.com/blogs/security/how-to-automatically-tag-amazon-ec2-resources-in-response-to-api-events/) is an article about autotagging written by an AWS blogger.
 
 ### Next step: Auototag RDS instances and S3 buckets.
 
@@ -294,6 +305,8 @@ Now that we have created the CloudWatch Rules, what do we do next?
 
 1. Edit the Lambda code
 2. Create a new IAM Role
+
+#### Create a New IAM Role
 
 Let's start with the IAM role. Here's what you have to do.
 
@@ -333,6 +346,7 @@ To make your work easier, delete what was in the json previously and just copy a
     ]
 }
 ```
+#### Autotagging Lambda Function
 
 Then, go to your lambda function AutoTag-CFAutoTag-XXXXXXX and add the following lines in the following order.
 
@@ -547,7 +561,7 @@ to detect users that aren't following the tagging rules is this solution, Requir
 
 You can use AWS config to quickly find all the users who are not tagging their resources with the required tags. In the steps below, I will show you how that's done.
 
-1. Go to this website http://docs.aws.amazon.com/config/latest/developerguide/required-tags.html
+1. Go to this [website](http://docs.aws.amazon.com/config/latest/developerguide/required-tags.html)
 2. Scroll to the bottom of the webpage.
 3. Click launch stack.
 4. Cick next.
@@ -596,12 +610,12 @@ Pricing information for CloudFormation, CloudTrail, CloudWatch, SNS and Lambda
 
 ### CloudFormation 
 
-The following information is obtained from https://aws.amazon.com/cloudformation/pricing/.
+The following information is obtained from [AWS](https://aws.amazon.com/cloudformation/pricing/).
 
 "There is no additional charge for AWS CloudFormation." 
 
 ### CloudWatch 
-The following information is obtained from https://aws.amazon.com/cloudwatch/pricing/.
+The following information is obtained from [AWS](https://aws.amazon.com/cloudwatch/pricing/).
 
 ##### Amazon CloudWatch Logs
 
@@ -617,7 +631,7 @@ Data Transfer OUT from CloudWatch Logs is priced equivalent to the “Data Trans
 
 ### CloudTrail
 
-The following information is obtained from https://aws.amazon.com/cloudtrail/pricing/.
+The following information is obtained from [AWS](https://aws.amazon.com/cloudtrail/pricing/).
 
 There is no charge from AWS CloudTrail for creating a trail. By creating a CloudTrail trail, you can deliver two types of events to your Amazon S3 bucket.
 
@@ -634,7 +648,7 @@ The following information is obtained from https://aws.amazon.com/sns/pricing/.
 |email/email-JSON  |1,000	        |$2.00 per 100,000 |
 
 ### Lambda Pricing Details
-The following information is obtained from AWS Lambda Pricing, https://aws.amazon.com/lambda/pricing/.
+The following information is obtained from [AWS Lambda Pricing](https://aws.amazon.com/lambda/pricing/).
 
 The Lambda free tier includes 1M free requests per month and 400,000 GB-seconds of compute time per month.
 ##### Requests
@@ -687,7 +701,7 @@ Total charges = Compute charges + Request charges = $26.672 + $3.80 = $30.472 pe
 
 $30.472 dollars each month might seem a lot, but this is because we are hypothetically setting execution rate per month at 20 million, which does not happen unless you have many many IAM users launching instances, volumes, etc. everyday. The actual cost is actually much lower when both the compute time per month and the number of executions in each month are within the free tier range. Furthermore, the cost estimation for the other AWS services are overestimated as well to show you how costly it can be when the services are working in concert.
 
-### Example Cost breakdown of Autotagging:
+### Example Cost breakdown of Autotagging
 
 Charges for CloudFormation = $0 
 
@@ -709,7 +723,7 @@ Total = $6.26 + $30.472/month
 
 ## AWS Config Rule Costs:
 
-The following information is obtained from AWS, https://aws.amazon.com/config/pricing/.
+The following information is obtained from [AWS](https://aws.amazon.com/config/pricing/).
 
 With AWS Config, you are charged a one-time fee based on the number of Configuration Items recorded. 
 $0.003 per Configuration Item recorded
@@ -736,18 +750,15 @@ These cost estimations are merely for showing you how to calculate the costs for
 
 ##### CloudWatch: 
 An AWS service that deploys templates (like packages) that configure resources for you. 
-Definition from AWS below.
-http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
+Definition from [AWS](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) below.
 AWS CloudFormation is a service that helps you model and set up your Amazon Web Services resources so that you can spend less time managing those resources and more time focusing on your applications that run in AWS. You create a template that describes all the AWS resources that you want (like Amazon EC2 instances or Amazon RDS DB instances), and AWS CloudFormation takes care of provisioning and configuring those resources for you. You don't need to individually create and configure AWS resources and figure out what's dependent on what; AWS CloudFormation handles all of that. The following scenarios demonstrate how AWS CloudFormation can help.
 
 ##### CloudTrail: 
 An AWS service that records every action performed by the user, role, or AWS service as events.
-Definition from AWS below.
-http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
+Definition from [AWS](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html) below.
 AWS CloudTrail is an AWS service that helps you enable governance, compliance, and operational and risk auditing of your AWS account. Actions taken by a user, role, or an AWS service are recorded as events in CloudTrail. Events include actions taken in the AWS Management Console, AWS Command Line Interface, and AWS SDKs and APIs.
 
-##### AWS Config (AWS definition): 
-http://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html
+##### AWS Config ([AWS](http://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html) definition): 
 An AWS services that provides you with a detailed view of the configuration of AWS resources in your AWS account. This includes how the resources are related to one another and how they were configured in the past so that you can see how the configurations and relationships change over time.
 
 ## Useful Links:
