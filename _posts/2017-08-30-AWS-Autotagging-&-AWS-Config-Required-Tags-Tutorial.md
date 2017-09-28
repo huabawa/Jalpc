@@ -14,7 +14,7 @@ Table of Contents:
 - [Autotagging Cost Breakdown Example](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#example-cost-breakdown-of-autotagging)
 - [AWS Required tags Costs](https://github.com/huabawa/Jalpc/blob/master/_posts/2017-08-30-AWS-Autotagging-%26-AWS-Config-Required-Tags-Tutorial.md#aws-config-rule-costs)
 
-
+*Note: The Autotagging tutorial covers steps on how to autotag EC2, RDS and S3 resources, but not EFS.*
 
 # AWS Autottagging and AWS Config Rule: Required tags Tutorial
 
