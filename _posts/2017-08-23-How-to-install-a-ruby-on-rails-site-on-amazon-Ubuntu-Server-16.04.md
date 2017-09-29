@@ -91,7 +91,7 @@ Type ```Public DNS (IPv4):3000``` into your browser. Example: http://ec2-00-00-0
 
 Voila!! The Catarse website opens up.
 
-For a video about how to do this, click on this youtube link. https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s
+For a video about how to do this, click on this youtube [link](https://www.youtube.com/watch?v=zbwhn3GIb6I&t=8s).
 
 If you are interested in how to set up the payment gateway, you could use paypal or any other payment gateway. Catarse offers their own payment gateways. If you're interested in finding out more about payment gateways, please vist their github [page](https://github.com/catarse/catarse).  
 
