@@ -6,9 +6,9 @@ In this tutorial, I will be showing you how to connect an RDS MySQL instance to 
 
 Shiny is dynamic web pages built on R.
 
-Before you start this tutorial, make sure that you have MySQL community version installed. If you have not installed it, please go to this link, https://www.mysql.com/products/community/, to install it. If you don't have any experience in MySQL or R, this is the right tutorial for you, but if you do, that's great! When I started writing this tutorial, I had absolutely no experience in MySQL and R, so if I can understand MySQL and R, so can you. 
+Before you start this tutorial, make sure that you have MySQL community version installed. If you have not installed it, please go to this [link](https://www.mysql.com/products/community/), to install it. If you don't have any experience in MySQL or R, this is the right tutorial for you, but if you do, that's great! When I started writing this tutorial, I had absolutely no experience in MySQL and R, so if I can understand MySQL and R, so can you. 
 
-You should also install RStudio from here, https://www.rstudio.com/products/rstudio/download/.
+You should also install RStudio from [here](https://www.rstudio.com/products/rstudio/download/).
 Download and install this free version, RStudio Desktop Open Source License.
 
 After you have installed the MySQL community version and RStudio, follow these steps to access your RDS MySQL.
@@ -24,7 +24,7 @@ A message starting with, Welcome to the MySQL monitor., will show to tell you th
 4. Type ```SHOW databases;``` into Terminal.
 5. Type ```USE nameOfDatabase;``` into Terminal.
 
-For more information on how to do this, go to this link. http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html
+For more information on how to do this, go to this [link](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html).
 
 The following information is not required to understand how to do the rest of this tutorial. You can skip this part, **GRANT syntax**, if you would like.
 
@@ -32,7 +32,7 @@ The following information is not required to understand how to do the rest of th
 Granting all privileges on database to some user in the DB instance running MySQL
 
 1. ```GRANT ALL ON databaseName.* TO ‘user’@’hostname’;```
-The hostname, if omitted, defaults to ‘%’. (information obtained from https://dev.mysql.com/doc/refman/5.7/en/grant.html) 
+The hostname, if omitted, defaults to ‘%’. (information obtained from [here](https://dev.mysql.com/doc/refman/5.7/en/grant.html)) 
 Example: GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
 2. Refresh the system. Type: ```flush privileges;```
 3. Quit. Type: ```\q```
@@ -40,21 +40,18 @@ Example: GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
 5. Type the following to check that the database granted to the user is created: ```SHOW databases;```
 
 ## Introduction to Showing MySQL tables in a Shiny webpage
-https://shiny.rstudio.com/articles/persistent-data-storage.html
 
 I got the idea of displaying mysql tables with Shiny when my colleague mentioned that this was possible during our discussion with our boss on how to show energy data from the UW in mysql on a webpage. Having had no experience with mysql or shiny before, I thought the simplest and fastest way to begin learning these two things was to get help from my handy-dandy friend, Google. I simply typed in Shiny mysql into the google search bar and the first thing that showed up, Shiny - Persistent data storage in Shiny apps, was exactly the information that I needed. 
 
 After reading the description on the webpage about how to connect to MySQL in RStudio, my mind was telling me that I need to understand how to use MySQL before I even start using R, and so, I did. However, at the same time, I was wondering if I could find a demo site made already. Luckily, I found a live demo of a Shiny app on the persistent data webpage, which was open-sourced on github. This gave me the idea to use the github code for my DB instance mysql data. Meanwhile, I was learning how to use mysql. Although I wanted to go through the mysql reference manual as fast as I could, I realized that I had to go through each step carefully, so that I wasn’t missing out any important steps along the way. As soon as I created a database and a table, I was ready to head over to RStudio. 
 
-The next step was to understand how Shiny and R worked together. To get the help that I needed to answer this question, I went to google for help again. I typed Shiny tutorial into google search and again I found the information that I was looking for, Shiny - Tutorial. Since I knew I was looking for a quick read and not a video, I scrolled through the page to look for a written tutorial. This lead me to lesson 1 (https://shiny.rstudio.com/tutorial/lesson1/) in which I could quickly read about what I needed to know in order to create a shiny webpage. Once I understood the architecture of a shiny app, I went back to the github page of the demo site to implement my own MySQL database.
+The next step was to understand how Shiny and R worked together. To get the help that I needed to answer this question, I went to google for help again. I typed Shiny tutorial into google search and again I found the information that I was looking for, Shiny - Tutorial. Since I knew I was looking for a quick read and not a video, I scrolled through the page to look for a written tutorial. This lead me to Shiny tutorial [lesson 1](https://shiny.rstudio.com/tutorial/lesson1/), which allowed me to quickly read about what I needed to know in order to create a Shiny webpage. Once I understood the architecture of a shiny app, I went back to the github page of the demo site to implement my own MySQL database.
 
-Here is the demo site's github source code:
-
-https://github.com/daattali/shiny-server/tree/master/persistent-data-storage
+[Here](https://github.com/daattali/shiny-server/tree/master/persistent-data-storage) is the demo site's github source code.
 
 ## How to display a MySQL table on a Shiny webpage
 In order to use the github source code, you need to enter your own host, port, user, and password in storage.R.
-*Note: The following code is obtained from https://shiny.rstudio.com/articles/persistent-data-storage.html#mysql*
+*Note: The following code is obtained from [here](https://shiny.rstudio.com/articles/persistent-data-storage.html#mysql).*
 **WARNING: The host, port, user, and password in the code SHOULD BE DELETED when you upload this code to github or anywhere else online**
 
 1. Make a copy of the github folder persistent-data-storage on your computer.
@@ -107,7 +104,7 @@ loadData <- function() {
 ## How to display S3 bucket CSV file data on a Shiny webpage 
 **WARNING: DO NOT upload this code to github or anywhere else online WITH YOUR AWS ACCESS KEY ID and AWS SECRET ACCESS KEY**
 **!!! This part of the code is for storage.R in the github demo source code. But, you could use it in your github webpage, if you'd like.**
-*Note: The following code is obtained from https://shiny.rstudio.com/articles/persistent-data-storage.html#mysql*
+*Note: The following code is obtained from [here](https://shiny.rstudio.com/articles/persistent-data-storage.html#mysql).*
 
 1. Do the same thing as the instructions in the last section for MySQL
 
